@@ -1,32 +1,32 @@
 import 'package:equatable/equatable.dart';
 
-enum HomeStatus {
+enum MainStatus {
   initial,
   processing,
   success,
   failure,
 }
 
-final class HomeState extends Equatable {
-  final HomeStatus? status;
+final class MainState extends Equatable {
+  final MainStatus? status;
   final bool isLoadingPage;
 
 
-  const HomeState({
+  const MainState({
     this.status,
     this.isLoadingPage = false,
   });
 
-  static HomeState initial() =>
-      const HomeState(
-        status: HomeStatus.initial,
+  static MainState initial() =>
+      const MainState(
+        status: MainStatus.initial,
       );
 
-  HomeState copyWith({
-    HomeStatus? status,
+  MainState copyWith({
+    MainStatus? status,
     bool? isLoadingPage,
   }) {
-    return HomeState(
+    return MainState(
         status: status ?? this.status,
         isLoadingPage: isLoadingPage ?? this.isLoadingPage
     );
