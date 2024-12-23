@@ -1,4 +1,5 @@
-class AppConstants{
-  static const movieUrl = "https://api.themoviedb.org/3/";
-  static const imageUrl = "https://image.tmdb.org/t/p/original";
+class AppConstants {
+  static const home = "Home";
+  static const watchList = "Watch List";
+  static const settings = "Settings";
 }

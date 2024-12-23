@@ -48,6 +48,8 @@ class BeVietNamProStyles {
     );
   }
 
-  final regular16Tiffany =
+  final regular16White =
       customBeVietNamProStyle(16, Colors.white, AppFontWeight.regular.weight);
+  final regular16Black =
+      customBeVietNamProStyle(16, Colors.black, AppFontWeight.regular.weight);
 }
