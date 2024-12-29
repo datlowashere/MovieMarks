@@ -11,4 +11,5 @@ class AppConstants {
   static const averageRating = "Average Rating";
   static const readMore = "Read More";
   static const rateCount = "Rate Count";
+  static const genreTitle = "Categories";
 }

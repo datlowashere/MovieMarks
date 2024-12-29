@@ -12,3 +12,9 @@ final class HomeInitialEvent extends HomeEvent {
   @override
   List<Object?> get props => [];
 }
+
+final class LoadMoreMoviesEvent extends HomeEvent {
+  @override
+  List<Object?> get props => [];
+}
+

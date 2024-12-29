@@ -10,7 +10,7 @@ import 'package:movie_marks/data/models/movie_model.dart';
 import '../../config/theme/app_icons.dart';
 import 'custom_text_pair.dart';
 
-class MovieItem extends StatelessWidget {
+class MovieItem extends StatefulWidget {
   final bool? isShowRating;
   final bool? isShowReadMore;
   final MovieModel? movieModel;
@@ -29,12 +29,22 @@ class MovieItem extends StatelessWidget {
   });
 
   @override
+  _MovieItemState createState() => _MovieItemState();
+}
+
+class _MovieItemState extends State<MovieItem>
+    with AutomaticKeepAliveClientMixin {
+  @override
+  bool get wantKeepAlive => true;
+
+  @override
   Widget build(BuildContext context) {
+    super.build(context); // Call this to notify AutomaticKeepAliveClientMixin
     return GestureDetector(
-      onTap: onTapMovie,
+      onTap: widget.onTapMovie,
       child: Container(
         color: AppColors.charlestonGreen,
-        margin: EdgeInsets.only(top: index == 0 ? 0 : 18),
+        margin: EdgeInsets.only(top: widget.index == 0 ? 0 : 18),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -55,7 +65,7 @@ class MovieItem extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
         child: Image.network(
-          ApiUrls.imageUrl + (movieModel?.posterPath ?? ""),
+          ApiUrls.imageUrl + (widget.movieModel?.posterPath ?? ""),
           fit: BoxFit.cover,
           errorBuilder: (context, error, stackTrace) => Image.asset(
             AppImages.defaultAvatar.webpAssetPath,
@@ -74,19 +84,19 @@ class MovieItem extends StatelessWidget {
           marginBottom: 5,
           betweenSpacing: 0,
           title: AppConstants.title,
-          content: movieModel?.originalTitle ?? "",
+          content: widget.movieModel?.originalTitle ?? "",
         ),
         CustomTextPair(
           marginBottom: 5,
           betweenSpacing: 0,
           title: AppConstants.releaseDate,
-          content: movieModel?.releaseDate ?? "",
+          content: widget.movieModel?.releaseDate ?? "",
         ),
         CustomTextPair(
           marginBottom: 5,
           betweenSpacing: 0,
           title: AppConstants.averageRating,
-          content: movieModel?.voteAverage?.toString() ?? "",
+          content: widget.movieModel?.voteAverage?.toString() ?? "",
         ),
       ],
     );
@@ -100,9 +110,9 @@ class MovieItem extends StatelessWidget {
         children: [
           _buildBookmarkButton(),
           const SizedBox(height: 18),
-          if (isShowRating ?? true) _buildRatingWidget(),
+          if (widget.isShowRating ?? true) _buildRatingWidget(),
           const SizedBox(height: 60),
-          if (isShowReadMore ?? true)
+          if (widget.isShowReadMore ?? true)
             Text(
               AppConstants.readMore,
               textAlign: TextAlign.left,
@@ -118,9 +128,9 @@ class MovieItem extends StatelessWidget {
       width: 24,
       height: 24,
       child: IconButton(
-        onPressed: onTapBookmark,
+        onPressed: widget.onTapBookmark,
         icon: SvgPicture.asset(
-          movieModel?.isSaved == true
+          widget.movieModel?.isSaved == true
               ? AppIcons.bookmarkFilled.svgAssetPath
               : AppIcons.bookmark.svgAssetPath,
         ),
@@ -138,7 +148,7 @@ class MovieItem extends StatelessWidget {
           child: IconButton(
             onPressed: () {},
             icon: SvgPicture.asset(
-              movieModel?.isRating == true
+              widget.movieModel?.isRating == true
                   ? AppIcons.starFilled.svgAssetPath
                   : AppIcons.star.svgAssetPath,
             ),
@@ -149,10 +159,10 @@ class MovieItem extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.only(top: 1),
           child: Text(
-            movieModel?.isRating == true ? "9.5" : "na",
+            widget.movieModel?.isRating == true ? "9.5" : "na",
             textAlign: TextAlign.center,
             style: AppTextStyles.beVietNamProStyles.regular12White.copyWith(
-              color: movieModel?.isRating == true
+              color: widget.movieModel?.isRating == true
                   ? AppColors.eucalyptus
                   : Colors.white,
             ),

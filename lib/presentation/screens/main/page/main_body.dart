@@ -1,6 +1,7 @@
 import 'package:flashy_tab_bar2/flashy_tab_bar2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_marks/config/theme/app_colors.dart';
 import 'package:movie_marks/constants/app_contants.dart';
 import 'package:movie_marks/presentation/screens/home/page/home_page.dart';
 import 'package:movie_marks/presentation/screens/main/bloc/main_bloc.dart';
@@ -23,7 +24,6 @@ class _MainBodyState extends State<MainBody> {
     const SettingPage(),
   ];
 
-
   @override
   Widget build(BuildContext context) {
     return BlocListener<MainBloc, MainState>(
@@ -40,19 +40,23 @@ class _MainBodyState extends State<MainBody> {
               onItemSelected: (index) => setState(() {
                 _selectedIndex = index;
               }),
+              backgroundColor: AppColors.charlestonGreen,
               items: [
                 FlashyTabBarItem(
-                  icon: const Icon(Icons.home),
-                  title: const Text(AppConstants.home),
-                ),
+                    icon: const Icon(Icons.home),
+                    title: const Text(AppConstants.home),
+                    activeColor: AppColors.brightGray,
+                    inactiveColor: AppColors.brightGray),
                 FlashyTabBarItem(
-                  icon: const Icon(Icons.bookmark),
-                  title: const Text(AppConstants.watchList),
-                ),
+                    icon: const Icon(Icons.bookmark),
+                    title: const Text(AppConstants.watchList),
+                    activeColor: AppColors.brightGray,
+                    inactiveColor: AppColors.brightGray),
                 FlashyTabBarItem(
-                  icon: const Icon(Icons.settings),
-                  title: const Text(AppConstants.settings),
-                ),
+                    icon: const Icon(Icons.settings),
+                    title: const Text(AppConstants.settings),
+                    activeColor: AppColors.brightGray,
+                    inactiveColor: AppColors.brightGray),
               ],
             ),
           );
