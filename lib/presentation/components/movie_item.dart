@@ -33,7 +33,7 @@ class MovieItem extends StatelessWidget {
     return GestureDetector(
       onTap: onTapMovie,
       child: Container(
-        color: AppColors.darkGrey,
+        color: AppColors.charlestonGreen,
         margin: EdgeInsets.only(top: index == 0 ? 0 : 18),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +106,7 @@ class MovieItem extends StatelessWidget {
             Text(
               AppConstants.readMore,
               textAlign: TextAlign.left,
-              style: AppTextStyles.beVietNamProStyles.regular12Green,
+              style: AppTextStyles.beVietNamProStyles.regular12Eucalyptus,
             ),
         ],
       ),
@@ -153,7 +153,7 @@ class MovieItem extends StatelessWidget {
             textAlign: TextAlign.center,
             style: AppTextStyles.beVietNamProStyles.regular12White.copyWith(
               color: movieModel?.isRating == true
-                  ? AppColors.mintGreen
+                  ? AppColors.eucalyptus
                   : Colors.white,
             ),
           ),

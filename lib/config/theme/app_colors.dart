@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  // eucalyptus
-  static const Color mintGreen = Color(0xFF4FCCA3);
-  // charlestonGreen
-  static const Color darkGrey = Color(0xFF242A32);
-  //arsenic
-  static const Color lightGrey = Color(0xFF3A3F47);
-  //brightGray
-  static const Color shadeGrey = Color(0xFFEEEEEE);
+  static const Color eucalyptus = Color(0xFF4FCCA3);
+  static const Color charlestonGreen = Color(0xFF242A32);
+  static const Color arsenic = Color(0xFF3A3F47);
+  static const Color brightGray = Color(0xFFEEEEEE);
 }
