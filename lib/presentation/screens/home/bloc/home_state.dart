@@ -14,12 +14,14 @@ final class HomeState extends Equatable {
   final bool isLoadingPage;
   final List<GenreModel>? listGenres;
   final List<MovieModel>? listMovies;
+  final List<GenreModel>? selectedGenres;
 
   const HomeState(
       {this.status,
       this.isLoadingPage = false,
       this.listGenres,
-      this.listMovies});
+      this.listMovies,
+      this.selectedGenres});
 
   static HomeState initial() => const HomeState(
         status: HomeStatus.initial,
@@ -29,14 +31,17 @@ final class HomeState extends Equatable {
       {HomeStatus? status,
       bool? isLoadingPage,
       List<GenreModel>? listGenres,
-      List<MovieModel>? listMovies}) {
+      List<MovieModel>? listMovies,
+      List<GenreModel>? selectedGenres}) {
     return HomeState(
         status: status ?? this.status,
         isLoadingPage: isLoadingPage ?? this.isLoadingPage,
         listGenres: listGenres ?? this.listGenres,
-        listMovies: listMovies ?? this.listMovies);
+        listMovies: listMovies ?? this.listMovies,
+        selectedGenres: selectedGenres ?? this.selectedGenres);
   }
 
   @override
-  List<Object?> get props => [status, isLoadingPage, listGenres, listMovies];
+  List<Object?> get props =>
+      [status, isLoadingPage, listGenres, listMovies, selectedGenres];
 }

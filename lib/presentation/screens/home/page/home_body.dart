@@ -61,6 +61,30 @@ class _HomeBodyState extends State<HomeBody> {
                             margin: EdgeInsets.only(left: index == 0 ? 29 : 0),
                             child: CustomButton(
                               title: state.listGenres?[index].title ?? '',
+                              titleStyle: AppTextStyles
+                                  .beVietNamProStyles.regular12White
+                                  .copyWith(
+                                color:
+                                    state.listGenres?[index].isSelected ?? false
+                                        ? AppColors.brightGray
+                                        : Colors.white,
+                                fontWeight:
+                                    state.listGenres?[index].isSelected ?? false
+                                        ? FontWeight.w600
+                                        : FontWeight.w400,
+                              ),
+                              backgroundColor:
+                                  state.listGenres?[index].isSelected ?? false
+                                      ? AppColors.eucalyptus
+                                      : AppColors.arsenic,
+                              onTap: () {
+                                final genre = state.listGenres?[index];
+                                if (genre != null) {
+                                  context
+                                      .read<HomeBloc>()
+                                      .add(HomeGenreSelectionEvent(genre));
+                                }
+                              },
                               padding: const EdgeInsets.symmetric(
                                   vertical: 7, horizontal: 22),
                               borderRadius: 16,
@@ -75,30 +99,42 @@ class _HomeBodyState extends State<HomeBody> {
                     const SizedBox(
                       height: 29,
                     ),
-                    Expanded(
-                      child: LazyLoadScrollView(
-                        onEndOfPage: () {
-                          context.read<HomeBloc>().add(LoadMoreMoviesEvent());
-                        },
-                        isLoading: state.status == HomeStatus.processing,
-                        child: Container(
-                          margin: const EdgeInsets.only(left: 29),
-                          child: ListView.separated(
-                            itemCount: state.listMovies?.length ?? 0,
-                            itemBuilder: (context, index) {
-                              return
-                                MovieItem(
-                                index: index,
-                                movieModel: state.listMovies?[index],
-                              );
-                            },
-                            separatorBuilder: (context, index) {
-                              return const SizedBox(height: 12);
-                            },
+                    state.listMovies?.isEmpty ?? true
+                        ? Expanded(
+                            child: Center(
+                              child: CustomTitle(
+                                title: AppConstants.emptyMovie,
+                                style: AppTextStyles
+                                    .beVietNamProStyles.regular14White,
+                                textAlign: TextAlign.center,
+                              ),
+                            ),
+                          )
+                        : Expanded(
+                            child: LazyLoadScrollView(
+                              onEndOfPage: () {
+                                context
+                                    .read<HomeBloc>()
+                                    .add(HomeLoadMoreMoviesEvent());
+                              },
+                              isLoading: state.status == HomeStatus.processing,
+                              child: Container(
+                                margin: const EdgeInsets.only(left: 29),
+                                child: ListView.separated(
+                                  itemCount: state.listMovies?.length ?? 0,
+                                  itemBuilder: (context, index) {
+                                    return MovieItem(
+                                      index: index,
+                                      movieModel: state.listMovies?[index],
+                                    );
+                                  },
+                                  separatorBuilder: (context, index) {
+                                    return const SizedBox(height: 12);
+                                  },
+                                ),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),
-                    ),
                   ]),
             )),
           );

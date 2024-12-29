@@ -9,7 +9,23 @@ class MovieRepository {
       : _apiService = apiService ?? ApiServiceTMDB();
 
   Future<List<MovieModel>> getPopularMovies({int page = 1}) async {
-    final response = await _apiService.get(ApiUrls.moviesEndPoint, queryParameters: {
+    final response =
+        await _apiService.get(ApiUrls.moviesEndPoint, queryParameters: {
+      'page': page,
+    });
+
+    final movies = (response.data['results'] as List<dynamic>)
+        .map((json) => MovieModel.fromJson(json as Map<String, dynamic>))
+        .toList();
+
+    return movies;
+  }
+
+  Future<List<MovieModel>> getMoviesByGenres(List<int> genreIds,
+      {int page = 1}) async {
+    final response =
+        await _apiService.get(ApiUrls.filterByGenreEndPoint, queryParameters: {
+      'with_genres': genreIds.join(','),
       'page': page,
     });
 

@@ -13,11 +13,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
 
   HomeBloc() : super(HomeState.initial()) {
     on<HomeInitialEvent>(_onHomeInitialEvent);
-    on<LoadMoreMoviesEvent>(_onLoadMoreMoviesEvent);
+    on<HomeLoadMoreMoviesEvent>(_onHomeLoadMoreMoviesEvent);
+    on<HomeGenreSelectionEvent>(_onHomeGenreSelection);
   }
+
   void _onHomeInitialEvent(
       HomeInitialEvent event, Emitter<HomeState> emit) async {
-    emit(state.copyWith(status: HomeStatus.processing, isLoadingPage: event.isLoadingPage));
+    emit(state.copyWith(
+        status: HomeStatus.processing, isLoadingPage: event.isLoadingPage));
 
     try {
       final genres = await genreRepository.getListGenres();
@@ -33,15 +36,25 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
       emit(state.copyWith(status: HomeStatus.failure));
     }
   }
-  void _onLoadMoreMoviesEvent(
-      LoadMoreMoviesEvent event, Emitter<HomeState> emit) async {
+
+  void _onHomeLoadMoreMoviesEvent(
+      HomeLoadMoreMoviesEvent event, Emitter<HomeState> emit) async {
     if (isEndOfList) return;
     emit(state.copyWith(status: HomeStatus.processing));
 
-    final newMovies =
-        await movieRepository.getPopularMovies(page: currentPage + 1);
+    final selectedGenreIds = state.listGenres
+        ?.where((genre) => genre.isSelected)
+        .map((genre) => genre.id)
+        .whereType<int>()
+        .toList();
+
+    final newMovies = await movieRepository
+        .getMoviesByGenres(selectedGenreIds ?? [], page: currentPage + 1);
 
     if (newMovies.isEmpty) {
+      emit(state.copyWith(
+        status: HomeStatus.success,
+      ));
       isEndOfList = true;
     } else {
       currentPage++;
@@ -50,5 +63,28 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         status: HomeStatus.success,
       ));
     }
+  }
+
+  void _onHomeGenreSelection(
+      HomeGenreSelectionEvent event, Emitter<HomeState> emit) async {
+    final updatedGenres = state.listGenres?.map((genre) {
+      if (genre.id == event.genre.id) {
+        return genre.copyWith(isSelected: !genre.isSelected);
+      }
+      return genre;
+    }).toList();
+
+    emit(state.copyWith(listGenres: updatedGenres));
+
+    final selectedGenreIds = updatedGenres
+        ?.where((genre) => genre.isSelected)
+        .map((genre) => genre.id)
+        .whereType<int>()
+        .toList();
+
+    final movies =
+        await movieRepository.getMoviesByGenres(selectedGenreIds ?? []);
+
+    emit(state.copyWith(listMovies: movies));
   }
 }
