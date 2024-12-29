@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const shamrockGreen = Color(0xff0C9A61);
-  static const cultured = Color(0xffF7F7F7);
-  static const platinum = Color(0xffE2E2E2);
+  static const Color eucalyptus = Color(0xFF4FCCA3);
+  static const Color charlestonGreen = Color(0xFF242A32);
+  static const Color arsenic = Color(0xFF3A3F47);
+  static const Color brightGray = Color(0xFFEEEEEE);
 }

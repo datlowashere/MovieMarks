@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:movie_marks/config/theme/app_colors.dart';
 
 enum AppFontFamily { beVietNamPro }
 
@@ -52,4 +53,30 @@ class BeVietNamProStyles {
       customBeVietNamProStyle(16, Colors.white, AppFontWeight.regular.weight);
   final regular16Black =
       customBeVietNamProStyle(16, Colors.black, AppFontWeight.regular.weight);
+  final regular12White =
+      customBeVietNamProStyle(12, Colors.white, AppFontWeight.regular.weight);
+  final regular12Eucalyptus = customBeVietNamProStyle(
+      12, AppColors.eucalyptus, AppFontWeight.regular.weight);
+  final medium12White =
+      customBeVietNamProStyle(12, Colors.white, AppFontWeight.medium.weight);
+  final semiBold12White =
+      customBeVietNamProStyle(12, Colors.white, AppFontWeight.semiBold.weight);
+  final semiBold12CharlestonGreen = customBeVietNamProStyle(
+      12, AppColors.charlestonGreen, AppFontWeight.semiBold.weight);
+  final regular14White =
+      customBeVietNamProStyle(14, Colors.white, AppFontWeight.regular.weight);
+  final semiBold14CharlestonGreen = customBeVietNamProStyle(
+      14, AppColors.charlestonGreen, AppFontWeight.semiBold.weight);
+  final semiBold14BrightGray = customBeVietNamProStyle(
+      14, AppColors.brightGray, AppFontWeight.semiBold.weight);
+  final semiBold14Black =
+      customBeVietNamProStyle(14, Colors.black, AppFontWeight.semiBold.weight);
+  final semiBold18White =
+      customBeVietNamProStyle(18, Colors.white, AppFontWeight.semiBold.weight);
+  final semiBold18Black =
+      customBeVietNamProStyle(18, Colors.black, AppFontWeight.semiBold.weight);
+  final bold36White =
+      customBeVietNamProStyle(36, Colors.white, AppFontWeight.bold.weight);
+  final bold36Black =
+      customBeVietNamProStyle(36, Colors.black, AppFontWeight.bold.weight);
 }

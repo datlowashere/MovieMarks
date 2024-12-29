@@ -15,7 +15,8 @@ class HomePage extends StatelessWidget {
     return BlocProvider<HomeBloc>(
       create: (context) =>
           HomeBloc()..add(HomeInitialEvent(isLoadingPage: isLoadingPage)),
-      child: HomeBody(),
+      child: const HomeBody(),
     );
   }
 }
+
