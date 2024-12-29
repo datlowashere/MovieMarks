@@ -1,5 +1,11 @@
 enum AppIcons {
   search,
+  bookmark,
+  bookmarkFilled,
+  cameraMovie,
+  star,
+  starFilled,
+  arrowBack
 }
 
 extension AppIconsExtension on AppIcons {
