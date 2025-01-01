@@ -5,4 +5,6 @@ class ApiUrls {
   static const genreEndPoint = "genre/movie/list";
   static const moviesEndPoint = "movie/popular";
   static const filterByGenreEndPoint = "discover/movie";
+  static const movieEndPoint = "movie/";
+
 }

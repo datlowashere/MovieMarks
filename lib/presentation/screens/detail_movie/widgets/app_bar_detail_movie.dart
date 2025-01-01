@@ -73,15 +73,14 @@ class AppBarDetailMovie extends StatelessWidget {
           bottomLeft: Radius.circular(16),
           bottomRight: Radius.circular(16),
         ),
-        child: FadeInImage.assetNetwork(
-          placeholder: AppImages.defaultPicker.pngAssetPath,
-          image: ApiUrls.imageUrl + (movieModel.backdropPath ?? ""),
+        child: Image.network(
+          ApiUrls.imageUrl + (movieModel.backdropPath ?? ""),
           fit: BoxFit.cover,
-          imageErrorBuilder: (_, __, ___) => Image.asset(
+          errorBuilder: (context, error, stackTrace) => Image.asset(
             AppImages.defaultPicker.pngAssetPath,
             fit: BoxFit.cover,
           ),
-        ),
+        )
       ),
     );
   }
@@ -118,15 +117,14 @@ class AppBarDetailMovie extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.circular(16),
-        child: FadeInImage.assetNetwork(
-          placeholder: AppImages.defaultPicker.pngAssetPath,
-          image: ApiUrls.imageUrl + (movieModel.posterPath ?? ""),
+        child: Image.network(
+          ApiUrls.imageUrl + (movieModel.posterPath ?? ""),
           fit: BoxFit.cover,
-          imageErrorBuilder: (_, __, ___) => Image.asset(
+          errorBuilder: (context, error, stackTrace) => Image.asset(
             AppImages.defaultPicker.pngAssetPath,
-            fit: BoxFit.contain,
+            fit: BoxFit.cover,
           ),
-        ),
+        )
       ),
     );
   }

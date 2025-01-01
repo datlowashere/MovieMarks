@@ -35,4 +35,13 @@ class MovieRepository {
 
     return movies;
   }
+
+  Future<MovieModel> getMovieDetail(int movieId) async {
+    final response = await _apiService.get(
+      '${ApiUrls.movieEndPoint}$movieId',
+    );
+
+    final movieDetail = MovieModel.fromJson(response.data as Map<String, dynamic>);
+    return movieDetail;
+  }
 }

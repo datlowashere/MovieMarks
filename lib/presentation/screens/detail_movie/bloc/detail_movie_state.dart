@@ -12,12 +12,10 @@ final class DetailMovieState extends Equatable {
   final DetailMovieStatus? status;
   final bool isLoadingPage;
   final MovieModel? movieModel;
+  final int? movieId;
 
-  const DetailMovieState({
-    this.status,
-    this.isLoadingPage = false,
-    this.movieModel,
-  });
+  const DetailMovieState(
+      {this.status, this.isLoadingPage = false, this.movieModel, this.movieId});
 
   static DetailMovieState initial() => const DetailMovieState(
         status: DetailMovieStatus.initial,
@@ -26,13 +24,15 @@ final class DetailMovieState extends Equatable {
   DetailMovieState copyWith(
       {DetailMovieStatus? status,
       bool? isLoadingPage,
-      MovieModel? movieModel}) {
+      MovieModel? movieModel,
+      int? movieId}) {
     return DetailMovieState(
         status: status ?? this.status,
         isLoadingPage: isLoadingPage ?? this.isLoadingPage,
-        movieModel: movieModel ?? this.movieModel);
+        movieModel: movieModel ?? this.movieModel,
+        movieId: movieId ?? this.movieId);
   }
 
   @override
-  List<Object?> get props => [status, isLoadingPage, movieModel];
+  List<Object?> get props => [status, isLoadingPage, movieModel, movieId];
 }

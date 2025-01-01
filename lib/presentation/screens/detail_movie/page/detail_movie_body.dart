@@ -7,6 +7,9 @@ import 'package:movie_marks/presentation/screens/detail_movie/bloc/detail_movie_
 import 'package:movie_marks/presentation/screens/detail_movie/bloc/detail_movie_state.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/widgets/app_bar_detail_movie.dart';
 
+import '../../../../config/theme/app_text_styles.dart';
+import '../../../components/custom_button.dart';
+
 class DetailMovieBody extends StatefulWidget {
   const DetailMovieBody({super.key});
 
@@ -38,12 +41,41 @@ class _DetailMovieBodyState extends State<DetailMovieBody> {
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
-                        return ListTile(
-                          leading: Icon(Icons.star),
-                          title: Text('Item $index'),
+                        return Column(
+                          children: [
+                            Container(
+                              height: 32,
+                              margin: const EdgeInsets.only(top: 18, bottom: 8),
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    state.movieModel?.genres?.length ?? 0,
+                                itemBuilder: (context, index) {
+                                  final item = state.movieModel?.genres?[index];
+                                  return Container(
+                                    margin: EdgeInsets.only(
+                                        left: index == 0 ? 29 : 0),
+                                    child: CustomButton(
+                                      onTap: () {},
+                                      title: item?.title ?? "",
+                                      titleStyle: AppTextStyles
+                                          .beVietNamProStyles.regular12White,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 7, horizontal: 22),
+                                      backgroundColor: AppColors.arsenic,
+                                      borderRadius: 16,
+                                    ),
+                                  );
+                                },
+                                separatorBuilder: (context, index) {
+                                  return const SizedBox(width: 12);
+                                },
+                              ),
+                            ),
+                          ],
                         );
                       },
-                      childCount: 30,
+                      childCount: 1,
                     ),
                   ),
                 ],

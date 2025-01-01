@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:movie_marks/data/models/movie_model.dart';
 
 sealed class DetailMovieEvent extends Equatable {
   const DetailMovieEvent();
@@ -7,9 +6,9 @@ sealed class DetailMovieEvent extends Equatable {
 
 final class DetailMovieInitialEvent extends DetailMovieEvent {
   final bool isLoadingPage;
-  final MovieModel movieModel;
+  final int movieId;
 
-  const DetailMovieInitialEvent( {required this.isLoadingPage, required this.movieModel,});
+  const DetailMovieInitialEvent( {required this.isLoadingPage, required this.movieId,});
 
   @override
   List<Object?> get props => [];

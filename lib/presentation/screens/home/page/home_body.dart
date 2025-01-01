@@ -132,8 +132,8 @@ class _HomeBodyState extends State<HomeBody> {
                                             context,
                                             MaterialPageRoute(
                                               builder: (_) => DetailMoviePage(
-                                                  movieModel:
-                                                      state.listMovies?[index]),
+                                                  movieId: state
+                                                      .listMovies?[index].id),
                                             ));
                                       },
                                     );

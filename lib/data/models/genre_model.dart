@@ -3,11 +3,7 @@ class GenreModel {
   final String? title;
   final bool isSelected;
 
-  GenreModel({
-    required this.id,
-    required this.title,
-    this.isSelected = false
-  });
+  GenreModel({this.id, this.title, this.isSelected = false});
 
   factory GenreModel.fromJson(Map<String, dynamic> json) {
     return GenreModel(
@@ -15,11 +11,18 @@ class GenreModel {
         title: json['name'] is String ? json['name'] as String : "");
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': title,
+    };
+  }
+
   GenreModel copyWith({
     int? id,
     String? title,
     bool? isSelected,
-}){
+  }) {
     return GenreModel(
       id: id ?? this.id,
       title: title ?? this.title,
