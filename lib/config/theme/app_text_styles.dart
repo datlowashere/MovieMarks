@@ -69,6 +69,8 @@ class BeVietNamProStyles {
       14, AppColors.charlestonGreen, AppFontWeight.semiBold.weight);
   final semiBold14BrightGray = customBeVietNamProStyle(
       14, AppColors.brightGray, AppFontWeight.semiBold.weight);
+  final semiBold14White = customBeVietNamProStyle(
+      14, Colors.white, AppFontWeight.semiBold.weight);
   final semiBold14Black =
       customBeVietNamProStyle(14, Colors.black, AppFontWeight.semiBold.weight);
   final semiBold18White =
