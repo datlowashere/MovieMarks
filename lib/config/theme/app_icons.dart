@@ -5,7 +5,11 @@ enum AppIcons {
   cameraMovie,
   star,
   starFilled,
-  arrowBack
+  arrowBack,
+  facebook,
+  x,
+  instagram,
+  link
 }
 
 extension AppIconsExtension on AppIcons {

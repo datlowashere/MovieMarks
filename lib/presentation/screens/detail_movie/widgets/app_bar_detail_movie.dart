@@ -95,13 +95,14 @@ class AppBarDetailMovie extends StatelessWidget {
         children: [
           _buildPosterImage(),
           const SizedBox(width: 22),
-          Expanded(
+          Flexible(
             child: Text(
-              movieModel.originalTitle ?? '',
+              movieModel.title ?? '',
+              softWrap: true,
               style: AppTextStyles.beVietNamProStyles.semiBold18White,
             ),
           ),
-          const SizedBox(width: 29),
+          const SizedBox(width: 10,)
         ],
       ),
     );

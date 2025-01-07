@@ -1,4 +1,5 @@
 import 'package:movie_marks/constants/api_urls.dart';
+import 'package:movie_marks/data/models/external_ids_model.dart';
 import 'package:movie_marks/data/models/movie_model.dart';
 import 'package:movie_marks/data/services/api_service_tmdb.dart';
 
@@ -41,7 +42,17 @@ class MovieRepository {
       '${ApiUrls.movieEndPoint}$movieId',
     );
 
-    final movieDetail = MovieModel.fromJson(response.data as Map<String, dynamic>);
+    final movieDetail =
+        MovieModel.fromJson(response.data as Map<String, dynamic>);
     return movieDetail;
+  }
+
+  Future<ExternalIdsModel> getMovieExternalIds(int movieId) async {
+    final response = await _apiService
+        .get("${ApiUrls.movieEndPoint}$movieId${ApiUrls.externalIdEndPoint}");
+
+    final externalIds =
+        ExternalIdsModel.fromJson(response.data as Map<String, dynamic>);
+    return externalIds;
   }
 }

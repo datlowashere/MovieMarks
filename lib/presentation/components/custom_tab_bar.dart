@@ -75,19 +75,20 @@ class _CustomTabBarState extends State<CustomTabBar>
             labelPadding:
                 widget.labelPadding ?? const EdgeInsets.only(right: 32),
             labelStyle: widget.labelStyle ??
-                AppTextStyles.beVietNamProStyles.semiBold16White,
+                AppTextStyles.beVietNamProStyles.semiBold14White,
             unselectedLabelStyle: widget.unselectedLabelStyle ??
-                AppTextStyles.beVietNamProStyles.bold16White,
+                AppTextStyles.beVietNamProStyles.semiBold14White,
             indicatorWeight: widget.dividerHeight ?? 4,
             overlayColor: const WidgetStatePropertyAll(Colors.transparent),
             indicatorColor: widget.indicatorColor ?? AppColors.brightGray,
             dividerColor: widget.dividerColor ?? Colors.white,
-            indicator: const UnderlineTabIndicator(
-              borderSide: BorderSide(
+            indicator: UnderlineTabIndicator(
+              borderSide: const BorderSide(
                 width: 4.0,
                 color: AppColors.brightGray,
               ),
-              insets: EdgeInsets.symmetric(horizontal: 0),
+              borderRadius: BorderRadius.circular(16),
+              insets: const EdgeInsets.symmetric(horizontal: 0),
             ),
             tabs: widget.tabsWithViews.keys
                 .map((tabTitle) => Tab(text: tabTitle))

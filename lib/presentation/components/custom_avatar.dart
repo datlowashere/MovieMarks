@@ -7,33 +7,37 @@ class CustomAvatar extends StatelessWidget {
   final double width;
   final double height;
   final double radius;
+  final VoidCallback? onTap;
 
-  const CustomAvatar({
-    super.key,
-    required this.url,
-    this.isLive = false,
-    required this.width,
-    required this.height,
-    required this.radius,
-  });
+  const CustomAvatar(
+      {super.key,
+      required this.url,
+      this.isLive = false,
+      required this.width,
+      required this.height,
+      required this.radius,
+      this.onTap});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: width,
-      height: height,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        border: Border.all(
-          color: isLive ? Colors.red : Colors.transparent,
-          width: 3.0,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          border: Border.all(
+            color: isLive ? Colors.red : Colors.transparent,
+            width: 3.0,
+          ),
         ),
-      ),
-      child: CircleAvatar(
-        radius: radius,
-        backgroundImage: url.isNotEmpty
-            ? NetworkImage(url)
-            : AssetImage(AppImages.defaultAvatar.webpAssetPath),
+        child: CircleAvatar(
+          radius: radius,
+          backgroundImage: url.isNotEmpty
+              ? NetworkImage(url)
+              : AssetImage(AppImages.defaultAvatar.webpAssetPath),
+        ),
       ),
     );
   }
