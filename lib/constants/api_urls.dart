@@ -8,6 +8,7 @@ class ApiUrls {
   static const movieEndPoint = "movie/";
   static const keywordEndPoint = "/keywords?";
   static const externalIdEndPoint = "/external_ids?";
+  static const creditEndpoint = "/credits?";
   static const facebookBaseUrl = "https://www.facebook.com/";
   static const instagramBaseUrl = "https://www.instagram.com/";
   static const xBaseUrl = "https://x.com/";

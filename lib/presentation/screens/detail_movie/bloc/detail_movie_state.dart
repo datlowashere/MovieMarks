@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:movie_marks/data/models/external_ids_model.dart';
 import 'package:movie_marks/data/models/keyword_model.dart';
+import 'package:movie_marks/data/models/movie_credits_model.dart';
 import 'package:movie_marks/data/models/movie_model.dart';
 
 enum DetailMovieStatus {
@@ -17,6 +18,7 @@ final class DetailMovieState extends Equatable {
   final int? movieId;
   final List<KeywordModel>? keywords;
   final ExternalIdsModel? externalIdsModel;
+  final MovieCreditsModel? movieCreditsModel;
 
   const DetailMovieState(
       {this.status,
@@ -24,7 +26,8 @@ final class DetailMovieState extends Equatable {
       this.movieModel,
       this.movieId,
       this.keywords,
-      this.externalIdsModel});
+      this.externalIdsModel,
+      this.movieCreditsModel});
 
   static DetailMovieState initial() => const DetailMovieState(
         status: DetailMovieStatus.initial,
@@ -36,17 +39,26 @@ final class DetailMovieState extends Equatable {
       MovieModel? movieModel,
       int? movieId,
       List<KeywordModel>? keywords,
-      ExternalIdsModel? externalIdsModel}) {
+      ExternalIdsModel? externalIdsModel,
+      MovieCreditsModel? movieCreditsModel}) {
     return DetailMovieState(
         status: status ?? this.status,
         isLoadingPage: isLoadingPage ?? this.isLoadingPage,
         movieModel: movieModel ?? this.movieModel,
         movieId: movieId ?? this.movieId,
         keywords: keywords ?? this.keywords,
-        externalIdsModel: externalIdsModel ?? this.externalIdsModel);
+        externalIdsModel: externalIdsModel ?? this.externalIdsModel,
+        movieCreditsModel: movieCreditsModel ?? this.movieCreditsModel);
   }
 
   @override
-  List<Object?> get props =>
-      [status, isLoadingPage, movieModel, movieId, keywords, externalIdsModel];
+  List<Object?> get props => [
+        status,
+        isLoadingPage,
+        movieModel,
+        movieId,
+        keywords,
+        externalIdsModel,
+        movieCreditsModel
+      ];
 }

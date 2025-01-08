@@ -15,8 +15,10 @@ class AppConstants {
   static const emptyMovie = "No movies found.";
   static const overview = "Overviews";
   static const reviews = "Reviews";
-  static const casts = "Casts";
-  static const crew = "Crews";
+  static const casts = "Series Cast ";
+  static const crew = "Series Crew ";
+  static const mainCasts = "Main Casts";
+  static const otherCasts = "Other Cast";
   static const productionCompany = "Production Company";
   static const productionCompanies = "Production Companies";
   static const productionCountry = "Production Country";

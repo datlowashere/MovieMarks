@@ -105,13 +105,15 @@ class _OverviewMovieTabState extends State<OverviewMovieTab> {
         const SizedBox(height: 10),
         GridView.count(
           crossAxisCount: 2,
-          childAspectRatio: 2,
+          childAspectRatio: 1.5,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
           children: (widget.movieModel.productionCompanies ?? []).map((item) {
             return CustomTextWithImage(
-              url: ApiUrls.imageUrl + (item.logoPath ?? ""),
-              text: item.name ?? "",
+              avatarHeight: 60,
+              avatarWidth: 60,
+              imageUrl: ApiUrls.imageUrl + (item.logoPath ?? ""),
+              title: item.name ?? "",
             );
           }).toList(),
         ),
@@ -157,7 +159,11 @@ class _OverviewMovieTabState extends State<OverviewMovieTab> {
                 width: 32,
               ),
             ),
-            Container(height: 32 , width: 1,color: AppColors.brightGray,),
+            Container(
+              height: 32,
+              width: 1,
+              color: AppColors.brightGray,
+            ),
             IconButton(
                 onPressed: () => _launchUrl(widget.movieModel.homepage),
                 icon: SvgPicture.asset(
@@ -198,8 +204,7 @@ class _OverviewMovieTabState extends State<OverviewMovieTab> {
     return GridView.count(
       shrinkWrap: true,
       crossAxisCount: 2,
-      childAspectRatio:
-          (movieModel.originalTitle?.length ?? 0) > 32 ? 2.8 : 3.5,
+      childAspectRatio: 2.8,
       physics: const NeverScrollableScrollPhysics(),
       children: [
         CustomTextPair(

@@ -5,6 +5,7 @@ import 'package:movie_marks/config/theme/app_colors.dart';
 import 'package:movie_marks/config/theme/app_text_styles.dart';
 import 'package:movie_marks/constants/app_contants.dart';
 import 'package:movie_marks/data/models/external_ids_model.dart';
+import 'package:movie_marks/data/models/movie_credits_model.dart';
 import 'package:movie_marks/data/models/movie_model.dart';
 import 'package:movie_marks/presentation/components/custom_tab_bar.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/bloc/detail_movie_bloc.dart';
@@ -102,10 +103,17 @@ class _DetailMovieBodyState extends State<DetailMovieBody> {
                           AppConstants.overview: OverviewMovieTab(
                             movieModel: state.movieModel ?? MovieModel(),
                             keywords: state.keywords ?? [],
-                            externalIdsModel: state.externalIdsModel ?? ExternalIdsModel(),
+                            externalIdsModel:
+                                state.externalIdsModel ?? ExternalIdsModel(),
                           ),
-                          AppConstants.casts: CastMovieTab(),
-                          AppConstants.crew: CrewMovieTab(),
+                          AppConstants.casts: CastMovieTab(
+                            movieCreditsModel: state.movieCreditsModel ??
+                                MovieCreditsModel(cast: [], crew: []),
+                          ),
+                          AppConstants.crew: CrewMovieTab(
+                            movieCreditsModel: state.movieCreditsModel ??
+                                MovieCreditsModel(cast: [], crew: []),
+                          ),
                           AppConstants.reviews:
                               Center(child: Text('Content for Tab 4')),
                         },
