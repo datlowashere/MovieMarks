@@ -1,5 +1,6 @@
 enum AppImages {
   defaultAvatar,
+  defaultPicker
 }
 
 extension AppImagesExtension on AppImages {

@@ -29,17 +29,17 @@ class MovieItem extends StatefulWidget {
   });
 
   @override
-  _MovieItemState createState() => _MovieItemState();
+  MovieItemState createState() => MovieItemState();
 }
 
-class _MovieItemState extends State<MovieItem>
+class MovieItemState extends State<MovieItem>
     with AutomaticKeepAliveClientMixin {
   @override
   bool get wantKeepAlive => true;
 
   @override
   Widget build(BuildContext context) {
-    super.build(context); // Call this to notify AutomaticKeepAliveClientMixin
+    super.build(context);
     return GestureDetector(
       onTap: widget.onTapMovie,
       child: Container(

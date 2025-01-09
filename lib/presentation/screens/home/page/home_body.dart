@@ -8,6 +8,7 @@ import 'package:movie_marks/constants/app_contants.dart';
 import 'package:movie_marks/presentation/components/custom_button.dart';
 import 'package:movie_marks/presentation/components/custom_title.dart';
 import 'package:movie_marks/presentation/components/movie_item.dart';
+import 'package:movie_marks/presentation/screens/detail_movie/page/detail_movie_page.dart';
 import 'package:movie_marks/presentation/screens/home/bloc/home_bloc.dart';
 import 'package:movie_marks/presentation/screens/home/bloc/home_event.dart';
 import 'package:movie_marks/presentation/screens/home/bloc/home_state.dart';
@@ -121,11 +122,21 @@ class _HomeBodyState extends State<HomeBody> {
                               child: Container(
                                 margin: const EdgeInsets.only(left: 29),
                                 child: ListView.separated(
+                                  addAutomaticKeepAlives: true,
                                   itemCount: state.listMovies?.length ?? 0,
                                   itemBuilder: (context, index) {
                                     return MovieItem(
                                       index: index,
                                       movieModel: state.listMovies?[index],
+                                      onTapMovie: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (_) => DetailMoviePage(
+                                                  movieId: state
+                                                      .listMovies?[index].id),
+                                            ));
+                                      },
                                     );
                                   },
                                   separatorBuilder: (context, index) {
