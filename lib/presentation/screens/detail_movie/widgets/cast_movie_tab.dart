@@ -24,7 +24,9 @@ class CastMovieTab extends StatelessWidget {
         const SizedBox(height: 18),
         _buildSectionTitle(AppConstants.mainCasts),
         _buildCastGrid(firstOrderCasts),
-        _buildSectionTitle(AppConstants.otherCasts),
+        remainingCasts.isNotEmpty
+            ? _buildSectionTitle(AppConstants.otherCasts)
+            : const SizedBox.shrink(),
         _buildCastGrid(remainingCasts),
       ],
     );

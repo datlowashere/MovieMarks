@@ -122,6 +122,7 @@ class _HomeBodyState extends State<HomeBody> {
                               child: Container(
                                 margin: const EdgeInsets.only(left: 29),
                                 child: ListView.separated(
+                                  addAutomaticKeepAlives: true,
                                   itemCount: state.listMovies?.length ?? 0,
                                   itemBuilder: (context, index) {
                                     return MovieItem(

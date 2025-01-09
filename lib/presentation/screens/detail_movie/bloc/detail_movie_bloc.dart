@@ -16,21 +16,33 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
 
   void _onDetailMovieInitialEvent(
       DetailMovieInitialEvent event, Emitter<DetailMovieState> emit) async {
-    final movie = await movieRepository.getMovieDetail(event.movieId);
-    final keywords = await searchRepository.getMovieKeywords(event.movieId);
-    final externalIds =
-        await movieRepository.getMovieExternalIds(event.movieId);
-
-    final movieCredits =
-        await castCrewRepository.getListCastAndCrew(event.movieId);
-
     emit(state.copyWith(
+      status: DetailMovieStatus.processing,
+      isLoadingPage: event.isLoadingPage,
+    ));
+
+    try {
+      final movie = await movieRepository.getMovieDetail(event.movieId);
+      final keywords = await searchRepository.getMovieKeywords(event.movieId);
+      final externalIds =
+          await movieRepository.getMovieExternalIds(event.movieId);
+      final movieCredits =
+          await castCrewRepository.getListCastAndCrew(event.movieId);
+
+      emit(state.copyWith(
         status: DetailMovieStatus.success,
         isLoadingPage: event.isLoadingPage,
         movieModel: movie,
         movieId: event.movieId,
         keywords: keywords,
         externalIdsModel: externalIds,
-        movieCreditsModel: movieCredits));
+        movieCreditsModel: movieCredits,
+      ));
+    } catch (error) {
+      emit(state.copyWith(
+        status: DetailMovieStatus.failure,
+        isLoadingPage: event.isLoadingPage,
+      ));
+    }
   }
 }

@@ -14,6 +14,7 @@ import 'package:movie_marks/presentation/screens/detail_movie/widgets/app_bar_de
 import 'package:movie_marks/presentation/screens/detail_movie/widgets/cast_movie_tab.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/widgets/crew_movie_tab.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/widgets/overview_movie_tab.dart';
+import 'package:movie_marks/presentation/screens/detail_movie/widgets/review_movie_tab.dart';
 
 import '../../../components/custom_button.dart';
 
@@ -29,7 +30,7 @@ class _DetailMovieBodyState extends State<DetailMovieBody> {
   Widget build(BuildContext context) {
     return BlocListener<DetailMovieBloc, DetailMovieState>(
       listener: (context, state) {
-        state.status == DetailMovieStatus.initial
+        state.status == DetailMovieStatus.processing
             ? EasyLoading.show()
             : EasyLoading.dismiss();
       },
@@ -106,16 +107,18 @@ class _DetailMovieBodyState extends State<DetailMovieBody> {
                             externalIdsModel:
                                 state.externalIdsModel ?? ExternalIdsModel(),
                           ),
-                          AppConstants.casts: CastMovieTab(
+                          "${AppConstants.casts} (${state.movieCreditsModel?.cast.length})":
+                              CastMovieTab(
                             movieCreditsModel: state.movieCreditsModel ??
                                 MovieCreditsModel(cast: [], crew: []),
                           ),
-                          AppConstants.crew: CrewMovieTab(
+                          "${AppConstants.crew} (${state.movieCreditsModel?.crew.length})":
+                              CrewMovieTab(
                             movieCreditsModel: state.movieCreditsModel ??
                                 MovieCreditsModel(cast: [], crew: []),
                           ),
                           AppConstants.reviews:
-                              Center(child: Text('Content for Tab 4')),
+                              const ReviewMovieTab(),
                         },
                       ),
                     ),

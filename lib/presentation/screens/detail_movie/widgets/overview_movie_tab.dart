@@ -52,9 +52,13 @@ class _OverviewMovieTabState extends State<OverviewMovieTab> {
           const SizedBox(height: 10),
           _buildMovieDetailsGrid(widget.movieModel),
           const SizedBox(height: 10),
-          _buildProductionCountriesSection(),
+          (widget.movieModel.productionCountries ?? []).isNotEmpty
+              ? _buildProductionCountriesSection()
+              : const SizedBox.shrink(),
           const SizedBox(height: 10),
-          _buildProductionCompaniesSection(),
+          (widget.movieModel.productionCompanies ?? []).isNotEmpty
+              ? _buildProductionCompaniesSection()
+              : const SizedBox.shrink(),
           const SizedBox(height: 10),
           _buildSocialLinksSection(),
           const SizedBox(height: 10),
