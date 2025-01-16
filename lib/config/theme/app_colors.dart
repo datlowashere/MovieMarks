@@ -5,4 +5,6 @@ class AppColors {
   static const Color charlestonGreen = Color(0xFF242A32);
   static const Color arsenic = Color(0xFF3A3F47);
   static const Color brightGray = Color(0xFFEEEEEE);
+  static const brinkPink = Color(0xffFF647A);
+
 }

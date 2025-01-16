@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:movie_marks/constants/api_urls.dart';
+import 'package:movie_marks/data/data_sources/local/shared_preferences.dart';
 
 enum Method { get, post, put, delete, patch }
 
@@ -7,15 +8,13 @@ class ApiService {
   final Dio _dio = Dio();
 
   ApiService() {
-    // var accessToken = SharedPrefer.sharedPrefer.getUserToken();
-    var accessToken = "";
-
+    var accessToken = SharedPrefer.sharedPrefer.getUserToken();
     _dio.options = BaseOptions(
       baseUrl: ApiUrls.baseUrl,
       connectTimeout: const Duration(milliseconds: 5000),
       receiveTimeout: const Duration(milliseconds: 3000),
       headers: {
-        if (accessToken.isNotEmpty) 'Authorization': accessToken,
+        if (accessToken.isNotEmpty) 'Authorization': 'Bearer $accessToken',
       },
       contentType: 'application/json',
       responseType: ResponseType.json,
@@ -67,34 +66,26 @@ class ApiService {
   }
 
   void _handleError(DioException e) {
+    final responseData = e.response?.data;
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
-        throw Exception("Connection Timeout");
+        throw "Connection Timeout";
       case DioExceptionType.sendTimeout:
-        throw Exception("Send Timeout");
+        throw "Send Timeout";
       case DioExceptionType.receiveTimeout:
-        throw Exception("Receive Timeout");
+        throw "Receive Timeout";
       case DioExceptionType.badResponse:
-        final statusCode = e.response?.statusCode;
-        final responseData = e.response?.data;
-        switch (statusCode) {
-          case 401:
-            throw Exception("Unauthorized: $responseData");
-          case 403:
-            throw Exception("Forbidden: $responseData");
-          case 404:
-            throw Exception("Not Found: $responseData");
-          case 500:
-            throw Exception("Internal Server Error: $responseData");
-          default:
-            throw Exception("HTTP Error ($statusCode): $responseData");
-        }
+        final errorMessage = responseData is Map<String, dynamic> &&
+                responseData.containsKey('message')
+            ? responseData['message']
+            : "Unexpected error occurred (${e.response?.statusCode})";
+        throw errorMessage;
       case DioExceptionType.cancel:
-        throw Exception("Request Cancelled");
+        throw "Request Cancelled";
       case DioExceptionType.unknown:
-        throw Exception("Unknown Error: ${e.message}");
+        throw "Unknown Error: ${e.message}";
       default:
-        throw Exception("Unexpected Dio Error: ${e.message}");
+        throw "Unexpected Dio Error: ${e.message}";
     }
   }
 }

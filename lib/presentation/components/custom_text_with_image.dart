@@ -49,7 +49,7 @@ class _CustomTextWithImageState extends State<CustomTextWithImage> {
         ),
         if (widget.content != null && widget.content!.isNotEmpty)
           Text(
-            widget.content!,
+            widget.content ?? "",
             style: widget.contentStyle ??
                 AppTextStyles.beVietNamProStyles.medium12White,
             softWrap: true,
