@@ -28,4 +28,29 @@ class AppConstants {
   static const keywords = "Keywords";
   static const socialNetwork = "Social Network";
   static const unKnow = "Unknown";
+  static const login = "Login";
+  static const register = "Register";
+  static const email = "Email";
+  static const password = "Password";
+  static const confirmPassword = "Confirm Password";
+  static const hasAccount = "Already has an account?";
+  static const backToLogin = "Back to login page!";
+  static const dontHaveAccount = "Don't have an account?";
+  static const registerNow = "Register now!";
+  static const welcomeToMM = "Welcome to MovieMarks";
+  static const loginToContinue = "Sign in to continue!";
+  static const createAccount = "Create an account!";
+  static const or = "or";
+  static const withGG = "Login with Google";
+  static const withFB = "Login with Facebook";
+  static const String errorMessageConfirmPassword =
+      'The confirmation password does not match the new password.';
+  static const verification = "Verification";
+  static const sendCode = "We sent a 6-digit code to";
+  static const String enterCode =
+      "Enter the code below to confirm your account. You may also tap on the link in the email we sent you.";
+  static const send = "Send";
+  static const resendCode ="Re send";
+  static const registerSuccessful ="Register Successful!";
+
 }

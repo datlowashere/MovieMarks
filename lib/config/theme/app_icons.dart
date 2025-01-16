@@ -9,7 +9,11 @@ enum AppIcons {
   facebook,
   x,
   instagram,
-  link
+  link,
+  google,
+  fbBlue,
+  close,
+  closeWhite
 }
 
 extension AppIconsExtension on AppIcons {

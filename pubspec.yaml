@@ -14,7 +14,7 @@ dependencies:
   http: ^0.13.4
   flutter_bloc: ^8.1.1
   equatable: ^2.0.0
-  shared_preferences: ^2.3.2
+  shared_preferences: ^2.3.5
   bloc: ^8.1.0
   dio: ^5.0.0
   dartz: ^0.10.1
@@ -25,6 +25,8 @@ dependencies:
   scrollable_list_tab_scroller: ^3.1.0
   expandable_page_view: ^1.0.6
   url_launcher: ^6.3.1
+  fluttertoast: ^8.2.10
+  flutter_otp_text_field: ^1.4.0+2
 
 dev_dependencies:
   flutter_test:

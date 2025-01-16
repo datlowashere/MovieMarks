@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:movie_marks/presentation/screens/settings/bloc/setting_bloc.dart';
+import 'package:movie_marks/presentation/screens/settings/bloc/setting_event.dart';
 import 'package:movie_marks/presentation/screens/settings/page/setting_body.dart';
 
-class SettingPage extends StatefulWidget {
+class SettingPage extends StatelessWidget {
   const SettingPage({super.key});
 
   @override
-  State<SettingPage> createState() => _SettingPageState();
-}
-
-class _SettingPageState extends State<SettingPage> {
-  @override
   Widget build(BuildContext context) {
-    return const SettingBody();
+    return BlocProvider<SettingBloc>(
+      create: (context) {
+        final bloc = SettingBloc();
+        bloc.add(SettingInitialEvent());
+        return bloc;
+      },
+      child: const SettingBody(),
+    );
   }
 }

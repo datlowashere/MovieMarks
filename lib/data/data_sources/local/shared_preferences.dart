@@ -1,3 +1,4 @@
+import 'package:movie_marks/constants/shared_preferences_key.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefer {
@@ -15,4 +16,12 @@ class SharedPrefer {
     _prefsInstance = await SharedPreferences.getInstance();
     return _prefsInstance;
   }
+  Future<void> setUserToken(String value) async {
+    await _prefsInstance.setString(SharedPreferencesKey.token, value);
+  }
+
+  String getUserToken() {
+    return _prefsInstance.getString(SharedPreferencesKey.token) ?? "";
+  }
+
 }
