@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:movie_marks/config/theme/app_colors.dart';
 import 'package:movie_marks/config/theme/app_icons.dart';
 import 'package:movie_marks/config/theme/app_text_styles.dart';
@@ -41,7 +42,14 @@ class _LoginBodyState extends State<LoginBody>
             : EasyLoading.dismiss();
         if (state.status == LoginStatus.success) {
           Navigator.pushNamedAndRemoveUntil(
-              context, AppRoutes.main, (route) => false,);
+            context,
+            AppRoutes.main,
+            (route) => false,
+          );
+          Fluttertoast.showToast(
+            msg: AppConstants.loginSuccess,
+            toastLength: Toast.LENGTH_SHORT,
+          );
         }
       },
       child: BlocBuilder<LoginBloc, LoginState>(
@@ -97,7 +105,7 @@ class _LoginBodyState extends State<LoginBody>
                             textAlign: TextAlign.start,
                             isFullWidth: true,
                             style:
-                            AppTextStyles.beVietNamProStyles.regular14White,
+                                AppTextStyles.beVietNamProStyles.regular14White,
                           ),
                           const SizedBox(
                             height: 12,
@@ -112,9 +120,9 @@ class _LoginBodyState extends State<LoginBody>
                             initialValue: state.inputEmail,
                             textStyle: state.isShowEmailMessage
                                 ? AppTextStyles
-                                .beVietNamProStyles.regular14BrinkPink
+                                    .beVietNamProStyles.regular14BrinkPink
                                 : AppTextStyles
-                                .beVietNamProStyles.regular14White,
+                                    .beVietNamProStyles.regular14White,
                             borderColor: state.isShowEmailMessage
                                 ? AppColors.brinkPink
                                 : AppColors.brightGray,
@@ -135,11 +143,11 @@ class _LoginBodyState extends State<LoginBody>
                           ),
                           state.isShowEmailMessage
                               ? CustomTitle(
-                            title: state.messageInputEmail,
-                            isFullWidth: true,
-                            style: AppTextStyles
-                                .beVietNamProStyles.regular14BrinkPink,
-                          )
+                                  title: state.messageInputEmail,
+                                  isFullWidth: true,
+                                  style: AppTextStyles
+                                      .beVietNamProStyles.regular14BrinkPink,
+                                )
                               : const SizedBox.shrink(),
                           const SizedBox(
                             height: 12,
@@ -149,7 +157,7 @@ class _LoginBodyState extends State<LoginBody>
                             textAlign: TextAlign.left,
                             isFullWidth: true,
                             style:
-                            AppTextStyles.beVietNamProStyles.regular14White,
+                                AppTextStyles.beVietNamProStyles.regular14White,
                           ),
                           CustomEditText(
                             backgroundColor: AppColors.charlestonGreen,
@@ -162,9 +170,9 @@ class _LoginBodyState extends State<LoginBody>
                             initialValue: state.inputPassword,
                             textStyle: state.isShowPasswordMessage
                                 ? AppTextStyles
-                                .beVietNamProStyles.regular14BrinkPink
+                                    .beVietNamProStyles.regular14BrinkPink
                                 : AppTextStyles
-                                .beVietNamProStyles.regular14White,
+                                    .beVietNamProStyles.regular14White,
                             borderColor: state.isShowPasswordMessage
                                 ? AppColors.brinkPink
                                 : AppColors.brightGray,
@@ -184,11 +192,11 @@ class _LoginBodyState extends State<LoginBody>
                           ),
                           state.isShowPasswordMessage
                               ? CustomTitle(
-                            title: state.messageInputPassword,
-                            isFullWidth: true,
-                            style: AppTextStyles
-                                .beVietNamProStyles.regular14BrinkPink,
-                          )
+                                  title: state.messageInputPassword,
+                                  isFullWidth: true,
+                                  style: AppTextStyles
+                                      .beVietNamProStyles.regular14BrinkPink,
+                                )
                               : const SizedBox.shrink(),
                           const SizedBox(
                             height: 12,
@@ -199,7 +207,7 @@ class _LoginBodyState extends State<LoginBody>
                           CustomButton(
                             title: AppConstants.login,
                             titleStyle:
-                            AppTextStyles.beVietNamProStyles.bold16White,
+                                AppTextStyles.beVietNamProStyles.bold16White,
                             padding: const EdgeInsets.symmetric(vertical: 12),
                             isFullWidth: true,
                             backgroundColor: state.isEnabled
@@ -207,11 +215,11 @@ class _LoginBodyState extends State<LoginBody>
                                 : AppColors.arsenic,
                             onTap: state.isEnabled
                                 ? () {
-                              FocusScope.of(context).unfocus();
-                              context
-                                  .read<LoginBloc>()
-                                  .add(LoginWithEmailPasswordEvent());
-                            }
+                                    FocusScope.of(context).unfocus();
+                                    context
+                                        .read<LoginBloc>()
+                                        .add(LoginWithEmailPasswordEvent());
+                                  }
                                 : null,
                           ),
                           const SizedBox(
@@ -229,9 +237,10 @@ class _LoginBodyState extends State<LoginBody>
                             title: AppConstants.withGG,
                             onTap: () {},
                             isExpanded: true,
+                            textCrossAxisAlignment: CrossAxisAlignment.center,
                             backgroundColor: AppColors.arsenic,
                             titleStyle:
-                            AppTextStyles.beVietNamProStyles.bold16White,
+                                AppTextStyles.beVietNamProStyles.bold16White,
                             padding: const EdgeInsets.symmetric(vertical: 8)
                                 .copyWith(left: 12),
                             isFullWidth: true,
@@ -248,8 +257,9 @@ class _LoginBodyState extends State<LoginBody>
                             isExpanded: true,
                             onTap: () {},
                             backgroundColor: AppColors.arsenic,
+                            textCrossAxisAlignment: CrossAxisAlignment.center,
                             titleStyle:
-                            AppTextStyles.beVietNamProStyles.bold16White,
+                                AppTextStyles.beVietNamProStyles.bold16White,
                             padding: const EdgeInsets.symmetric(vertical: 8)
                                 .copyWith(left: 12),
                             isFullWidth: true,

@@ -1,12 +1,16 @@
 import 'package:bloc/bloc.dart';
+import 'package:movie_marks/data/models/genre_model.dart';
+import 'package:movie_marks/data/models/movie_model.dart';
 import 'package:movie_marks/data/repository/genre_repository.dart';
 import 'package:movie_marks/data/repository/movie_repository.dart';
+import 'package:movie_marks/data/repository/user_repository.dart';
 import 'home_event.dart';
 import 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GenreRepository genreRepository = GenreRepository();
   final MovieRepository movieRepository = MovieRepository();
+  final UserRepository userRepository = UserRepository();
 
   int currentPage = 1;
   bool isEndOfList = false;
@@ -17,28 +21,51 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     on<HomeGenreSelectionEvent>(_onHomeGenreSelection);
   }
 
-  void _onHomeInitialEvent(
-      HomeInitialEvent event, Emitter<HomeState> emit) async {
+  void _onHomeInitialEvent(HomeInitialEvent event,
+      Emitter<HomeState> emit) async {
     emit(state.copyWith(
-        status: HomeStatus.processing, isLoadingPage: event.isLoadingPage));
+      status: HomeStatus.processing,
+      isLoadingPage: event.isLoadingPage,
+    ));
 
     try {
-      final genres = await genreRepository.getListGenres();
-      final movies = await movieRepository.getPopularMovies();
+      final genresFuture = genreRepository.getListGenres();
+      final moviesFuture = movieRepository.getPopularMovies();
+
+      final userEither = await userRepository.getUserInfo();
+      final user = userEither.fold(
+            (error) {
+          return null;
+        },
+            (response) {
+          return response;
+        },
+      );
+
+      print("User Info: $user");
+
+      final results = await Future.wait([genresFuture, moviesFuture]);
+
+      final genres = results[0] as List<GenreModel>;
+      final movies = results[1] as List<MovieModel>;
 
       emit(state.copyWith(
         status: HomeStatus.success,
         isLoadingPage: event.isLoadingPage,
         listGenres: genres,
         listMovies: movies,
+        user: user, // Assign the user directly from the response
       ));
     } catch (e) {
-      emit(state.copyWith(status: HomeStatus.failure));
+      emit(state.copyWith(
+        status: HomeStatus.failure,
+      ));
     }
   }
 
-  void _onHomeLoadMoreMoviesEvent(
-      HomeLoadMoreMoviesEvent event, Emitter<HomeState> emit) async {
+
+  void _onHomeLoadMoreMoviesEvent(HomeLoadMoreMoviesEvent event,
+      Emitter<HomeState> emit) async {
     if (isEndOfList) return;
     emit(state.copyWith(status: HomeStatus.processing));
 
@@ -59,14 +86,15 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     } else {
       currentPage++;
       emit(state.copyWith(
-        listMovies: List.of(state.listMovies ?? [])..addAll(newMovies),
+        listMovies: List.of(state.listMovies ?? [])
+          ..addAll(newMovies),
         status: HomeStatus.success,
       ));
     }
   }
 
-  void _onHomeGenreSelection(
-      HomeGenreSelectionEvent event, Emitter<HomeState> emit) async {
+  void _onHomeGenreSelection(HomeGenreSelectionEvent event,
+      Emitter<HomeState> emit) async {
     final updatedGenres = state.listGenres?.map((genre) {
       if (genre.id == event.genre.id) {
         return genre.copyWith(isSelected: !genre.isSelected);
@@ -83,7 +111,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         .toList();
 
     final movies =
-        await movieRepository.getMoviesByGenres(selectedGenreIds ?? []);
+    await movieRepository.getMoviesByGenres(selectedGenreIds ?? []);
 
     emit(state.copyWith(listMovies: movies));
   }

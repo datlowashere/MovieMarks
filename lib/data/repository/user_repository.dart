@@ -45,10 +45,8 @@ class UserRepository {
 
       final response = await _apiService.request(ApiUrls.sendCodeEndPoint,
           method: Method.post, data: data);
-      print("object: ${response.data}");
       return Right(response.data);
     } catch (e) {
-      print("Error: $e");
       return Left(e.toString());
     }
   }
@@ -64,6 +62,25 @@ class UserRepository {
       } else {
         return Left('${response.statusCode}');
       }
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, UserModel>> getUserInfo() async {
+    try {
+      final response = await _apiService.request(
+        ApiUrls.getUserEndPoint,
+        method: Method.get,
+      );
+      final avatarUrl = response.data['user']['avatar'] as String?;
+
+      if (avatarUrl != null && avatarUrl.isNotEmpty) {
+        await SharedPrefer.sharedPrefer.setAvatar(avatarUrl);
+      }
+      final user = UserModel.fromJson(response.data['user']);
+
+      return Right(user);
     } catch (e) {
       return Left(e.toString());
     }

@@ -24,4 +24,12 @@ class SharedPrefer {
     return _prefsInstance.getString(SharedPreferencesKey.token) ?? "";
   }
 
+  Future<void> setAvatar(String value) async {
+    await _prefsInstance.setString(SharedPreferencesKey.avatar, value);
+  }
+
+  String getAvatar() {
+    return _prefsInstance.getString(SharedPreferencesKey.avatar) ?? "";
+  }
+
 }

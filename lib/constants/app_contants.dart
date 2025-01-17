@@ -29,6 +29,7 @@ class AppConstants {
   static const socialNetwork = "Social Network";
   static const unKnow = "Unknown";
   static const login = "Login";
+  static const logout = "Logout";
   static const register = "Register";
   static const email = "Email";
   static const password = "Password";
@@ -50,7 +51,22 @@ class AppConstants {
   static const String enterCode =
       "Enter the code below to confirm your account. You may also tap on the link in the email we sent you.";
   static const send = "Send";
-  static const resendCode ="Re send";
-  static const registerSuccessful ="Register Successful!";
+  static const resendCode = "Re send";
+  static const registerSuccessful = "Register Successful!";
+  static const termOfServices = "Term of services";
+  static const helpCentre = "Help and support";
+  static const privacy = "Privacy";
+  static const aboutAccount = "Account";
+  static const search = "Search";
+  static const myBookmark = "My Bookmark";
+  static const myReviews = "My Reviews";
+  static const aboutThisApp = "About this app";
+  static const confirmation = "Confirmation";
+  static const wantToLogout = "Are you sure you want to logout?";
+  static const yes = "Yes";
+  static const no = "No";
+  static const logoutSuccess = "Logout successful!";
+  static const loginSuccess = "Login successful!";
+  static const registerSuccess = "Register successful!";
 
 }

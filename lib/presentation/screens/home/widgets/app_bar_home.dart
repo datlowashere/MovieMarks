@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:movie_marks/config/theme/app_text_styles.dart';
 import 'package:movie_marks/constants/app_contants.dart';
+import 'package:movie_marks/data/models/user_model.dart';
 import 'package:movie_marks/presentation/components/custom_button.dart';
 import 'package:movie_marks/presentation/components/custom_text_pair.dart';
 import 'package:movie_marks/presentation/components/custom_title.dart';
 
 class AppBarHome extends StatefulWidget {
   final VoidCallback? onTapSearch;
+  final UserModel? userModel;
 
-  const AppBarHome({super.key, this.onTapSearch});
+  const AppBarHome({super.key, this.onTapSearch, this.userModel});
 
   @override
   State<AppBarHome> createState() => _AppBarHomeState();
@@ -45,7 +47,7 @@ class _AppBarHomeState extends State<AppBarHome> {
             children: [
               CustomTextPair(
                 title: AppConstants.welcomeBack,
-                content: AppConstants.appName,
+                content: widget.userModel?.username ?? "",
                 titleStyle: AppTextStyles.beVietNamProStyles.semiBold14BrightGray,
                 contentStyle:
                     AppTextStyles.beVietNamProStyles.semiBold14BrightGray,

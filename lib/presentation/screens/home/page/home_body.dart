@@ -42,6 +42,7 @@ class _HomeBodyState extends State<HomeBody> {
                   children: [
                     AppBarHome(
                       onTapSearch: () {},
+                      userModel: state.user,
                     ),
                     CustomTitle(
                       title: AppConstants.genreTitle,
