@@ -10,11 +10,7 @@ class SettingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<SettingBloc>(
-      create: (context) {
-        final bloc = SettingBloc();
-        bloc.add(SettingInitialEvent());
-        return bloc;
-      },
+      create: (_) => SettingBloc()..add(SettingInitialEvent()),
       child: const SettingBody(),
     );
   }

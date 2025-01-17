@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:movie_marks/config/theme/app_images.dart';
 
 class CustomAvatar extends StatefulWidget {
@@ -56,8 +55,8 @@ class _CustomAvatarState extends State<CustomAvatar>
                     fit: BoxFit.cover,
                   ),
                 )
-              : SvgPicture.asset(
-                  AppImages.defaultAvatar.pngAssetPath,
+              : Image.asset(
+                  AppImages.defaultAvatar.webpAssetPath,
                   width: widget.width,
                   height: widget.height,
                   fit: BoxFit.cover,

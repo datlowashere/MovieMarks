@@ -1,6 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:movie_marks/data/models/genre_model.dart';
 import 'package:movie_marks/data/models/movie_model.dart';
+import 'package:movie_marks/data/models/user_model.dart';
 
 enum HomeStatus {
   initial,
@@ -15,13 +16,15 @@ final class HomeState extends Equatable {
   final List<GenreModel>? listGenres;
   final List<MovieModel>? listMovies;
   final List<GenreModel>? selectedGenres;
+  final UserModel? user;
 
   const HomeState(
       {this.status,
       this.isLoadingPage = false,
       this.listGenres,
       this.listMovies,
-      this.selectedGenres});
+      this.selectedGenres,
+      this.user});
 
   static HomeState initial() => const HomeState(
         status: HomeStatus.initial,
@@ -32,16 +35,18 @@ final class HomeState extends Equatable {
       bool? isLoadingPage,
       List<GenreModel>? listGenres,
       List<MovieModel>? listMovies,
-      List<GenreModel>? selectedGenres}) {
+      List<GenreModel>? selectedGenres,
+      UserModel? user}) {
     return HomeState(
         status: status ?? this.status,
         isLoadingPage: isLoadingPage ?? this.isLoadingPage,
         listGenres: listGenres ?? this.listGenres,
         listMovies: listMovies ?? this.listMovies,
-        selectedGenres: selectedGenres ?? this.selectedGenres);
+        selectedGenres: selectedGenres ?? this.selectedGenres,
+        user: user ?? this.user);
   }
 
   @override
   List<Object?> get props =>
-      [status, isLoadingPage, listGenres, listMovies, selectedGenres];
+      [status, isLoadingPage, listGenres, listMovies, selectedGenres, user];
 }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:movie_marks/data/models/user_model.dart';
 
 enum SettingStatus {
   initial,
@@ -9,10 +10,9 @@ enum SettingStatus {
 
 final class SettingState extends Equatable {
   final SettingStatus? status;
+  final UserModel? user;
 
-  const SettingState({
-    this.status,
-  });
+  const SettingState({this.status, this.user});
 
   static SettingState initial() => const SettingState(
         status: SettingStatus.initial,
@@ -20,14 +20,11 @@ final class SettingState extends Equatable {
 
   SettingState copyWith({
     SettingStatus? status,
+    UserModel? user,
   }) {
-    return SettingState(
-      status: status ?? this.status,
-    );
+    return SettingState(status: status ?? this.status, user: user ?? this.user);
   }
 
   @override
-  List<Object?> get props => [
-        status,
-      ];
+  List<Object?> get props => [status, user];
 }

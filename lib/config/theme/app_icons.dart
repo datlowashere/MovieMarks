@@ -13,7 +13,17 @@ enum AppIcons {
   google,
   fbBlue,
   close,
-  closeWhite
+  closeWhite,
+  arrowRight,
+  privacy,
+  alert,
+  editFilled,
+  help,
+  logout,
+  login,
+  safety,
+  about,
+  review
 }
 
 extension AppIconsExtension on AppIcons {

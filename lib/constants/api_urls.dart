@@ -1,5 +1,5 @@
 class ApiUrls {
-  static const baseUrl = "http://192.168.1.5:3000/api/";
+  static const baseUrl = "http://192.168.1.6:3000/api/";
   static const tmdbApiBaseUrl = "https://api.themoviedb.org/3/";
   static const imageUrl = "https://image.tmdb.org/t/p/original";
   static const genreEndPoint = "genre/movie/list";
@@ -16,4 +16,7 @@ class ApiUrls {
   static const logoutEndPoint = "logout";
   static const sendCodeEndPoint = "sendcode";
   static const registerEndPoint = "register";
+  static const getUserEndPoint = "getuserinfo";
+  static const bookmarkEndPoint = "bookmarks";
+  static const reviewEndPoint = "reviews";
 }

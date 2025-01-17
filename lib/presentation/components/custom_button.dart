@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class CustomButton extends StatelessWidget {
-  final String title;
-  final TextStyle? titleStyle;
-  final TextAlign? textAlign;
+  final String title, subTitle;
+  final TextStyle? titleStyle, subTitleStyle;
+  final TextAlign? titleAlign, subAlign;
   final Color backgroundColor;
   final bool isEnabled;
   final Widget? prefix;
@@ -14,13 +14,15 @@ class CustomButton extends StatelessWidget {
   final EdgeInsetsGeometry padding;
   final double? width, height;
   final bool isFullWidth, isFullHeight;
-  final MainAxisAlignment? mainAxisAlignment;
-  final CrossAxisAlignment? crossAxisAlignment;
+  final MainAxisAlignment? btnMainAxisAlignment, textMainAxisAlignment;
+  final CrossAxisAlignment? btnCrossAxisAlignment, textCrossAxisAlignment;
   final bool isExpanded;
+  final double? textMarginLeft, textMarginRight;
 
   const CustomButton({
     super.key,
     this.title = '',
+    this.subTitle = '',
     this.titleStyle,
     this.backgroundColor = Colors.grey,
     this.isEnabled = true,
@@ -34,10 +36,16 @@ class CustomButton extends StatelessWidget {
     this.height,
     this.isFullWidth = false,
     this.isFullHeight = false,
-    this.mainAxisAlignment,
-    this.crossAxisAlignment,
+    this.btnMainAxisAlignment,
+    this.btnCrossAxisAlignment,
     this.isExpanded = false,
-    this.textAlign,
+    this.titleAlign,
+    this.subTitleStyle,
+    this.subAlign,
+    this.textMainAxisAlignment,
+    this.textCrossAxisAlignment,
+    this.textMarginLeft,
+    this.textMarginRight,
   });
 
   @override
@@ -60,23 +68,49 @@ class CustomButton extends StatelessWidget {
         ),
         child: Row(
           mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: mainAxisAlignment ?? MainAxisAlignment.center,
-          crossAxisAlignment: crossAxisAlignment ?? CrossAxisAlignment.center,
+          mainAxisAlignment: btnMainAxisAlignment ?? MainAxisAlignment.center,
+          crossAxisAlignment:
+              btnCrossAxisAlignment ?? CrossAxisAlignment.center,
           children: [
             if (prefix != null) prefix!,
+            SizedBox(
+              width: textMarginLeft ?? 0,
+            ),
             isExpanded
                 ? Expanded(
-                    child: Text(
-                      title,
-                      style: titleStyle ?? const TextStyle(color: Colors.white),
-                      textAlign: textAlign ?? TextAlign.center,
+                    child: Column(
+                      mainAxisAlignment:
+                          textMainAxisAlignment ?? MainAxisAlignment.start,
+                      crossAxisAlignment:
+                          textCrossAxisAlignment ?? CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          child: Text(
+                            title,
+                            style: titleStyle ??
+                                const TextStyle(color: Colors.white),
+                            textAlign: titleAlign ?? TextAlign.center,
+                          ),
+                        ),
+                        subTitle.isNotEmpty
+                            ? Text(
+                                subTitle,
+                                style: subTitleStyle ??
+                                    const TextStyle(color: Colors.white),
+                                textAlign: subAlign ?? TextAlign.center,
+                              )
+                            : const SizedBox.shrink(),
+                      ],
                     ),
                   )
                 : Text(
                     title,
                     style: titleStyle ?? const TextStyle(color: Colors.white),
-                    textAlign: textAlign ?? TextAlign.center,
+                    textAlign: titleAlign ?? TextAlign.center,
                   ),
+            SizedBox(
+              width: textMarginRight ?? 0,
+            ),
             if (suffix != null) suffix!,
           ],
         ),

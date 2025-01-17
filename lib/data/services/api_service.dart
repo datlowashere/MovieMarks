@@ -11,8 +11,8 @@ class ApiService {
     var accessToken = SharedPrefer.sharedPrefer.getUserToken();
     _dio.options = BaseOptions(
       baseUrl: ApiUrls.baseUrl,
-      connectTimeout: const Duration(milliseconds: 5000),
-      receiveTimeout: const Duration(milliseconds: 3000),
+      connectTimeout: const Duration(milliseconds: 50000),
+      receiveTimeout: const Duration(milliseconds: 100000),
       headers: {
         if (accessToken.isNotEmpty) 'Authorization': 'Bearer $accessToken',
       },
