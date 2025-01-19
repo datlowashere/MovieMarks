@@ -33,6 +33,10 @@ class UserRepository {
       );
 
       await SharedPrefer.sharedPrefer.setUserToken("");
+      await SharedPrefer.sharedPrefer.setUserId("");
+      await SharedPrefer.sharedPrefer.setAvatar("");
+      await SharedPrefer.sharedPrefer.setUsername("");
+
       return Right(response.data['message']);
     } catch (e) {
       return Left(e.toString());
@@ -74,9 +78,17 @@ class UserRepository {
         method: Method.get,
       );
       final avatarUrl = response.data['user']['avatar'] as String?;
+      final id = response.data['user']['_id'] as String?;
+      final username = response.data['user']['username'] as String?;
 
       if (avatarUrl != null && avatarUrl.isNotEmpty) {
         await SharedPrefer.sharedPrefer.setAvatar(avatarUrl);
+      }
+      if (id != null && id.isNotEmpty) {
+        await SharedPrefer.sharedPrefer.setUserId(id);
+      }
+      if (username != null && username.isNotEmpty) {
+        await SharedPrefer.sharedPrefer.setUsername(username);
       }
       final user = UserModel.fromJson(response.data['user']);
 

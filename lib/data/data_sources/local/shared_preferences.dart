@@ -16,6 +16,7 @@ class SharedPrefer {
     _prefsInstance = await SharedPreferences.getInstance();
     return _prefsInstance;
   }
+
   Future<void> setUserToken(String value) async {
     await _prefsInstance.setString(SharedPreferencesKey.token, value);
   }
@@ -32,4 +33,19 @@ class SharedPrefer {
     return _prefsInstance.getString(SharedPreferencesKey.avatar) ?? "";
   }
 
+  Future<void> setUserId(String value) async {
+    await _prefsInstance.setString(SharedPreferencesKey.idUser, value);
+  }
+
+  String getUserId() {
+    return _prefsInstance.getString(SharedPreferencesKey.idUser) ?? "";
+  }
+
+  Future<void> setUsername(String value) async {
+    await _prefsInstance.setString(SharedPreferencesKey.username, value);
+  }
+
+  String getUsername() {
+    return _prefsInstance.getString(SharedPreferencesKey.username) ?? "";
+  }
 }

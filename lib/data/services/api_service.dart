@@ -65,27 +65,61 @@ class ApiService {
     }
   }
 
+  // void _handleError(DioException e) {
+  //   final responseData = e.response?.data;
+  //   switch (e.type) {
+  //     case DioExceptionType.connectionTimeout:
+  //       throw "Connection Timeout";
+  //     case DioExceptionType.sendTimeout:
+  //       throw "Send Timeout";
+  //     case DioExceptionType.receiveTimeout:
+  //       throw "Receive Timeout";
+  //     case DioExceptionType.badResponse:
+  //       final errorMessage = responseData is Map<String, dynamic> &&
+  //               responseData.containsKey('message')
+  //           ? responseData['message']
+  //           : "Unexpected error occurred (${e.response?.statusCode})";
+  //       throw errorMessage;
+  //     case DioExceptionType.cancel:
+  //       throw "Request Cancelled";
+  //     case DioExceptionType.unknown:
+  //       throw "Unknown Error: ${e.message}";
+  //     default:
+  //       throw "Unexpected Dio Error: ${e.message}";
+  //   }
+  // }
+
   void _handleError(DioException e) {
+    // In tất cả các thông tin về lỗi
+    print("DioException caught:");
+    print("- Type: ${e.type}");
+    print("- Message: ${e.message}");
+    print("- Response: ${e.response?.toString() ?? "No response"}");
+    print("- Headers: ${e.response?.headers}");
+    print("- Data: ${e.response?.data}");
+
     final responseData = e.response?.data;
+
     switch (e.type) {
       case DioExceptionType.connectionTimeout:
-        throw "Connection Timeout";
+        throw "Connection Timeout: Unable to connect to the server.";
       case DioExceptionType.sendTimeout:
-        throw "Send Timeout";
+        throw "Send Timeout: The server did not receive the request in time.";
       case DioExceptionType.receiveTimeout:
-        throw "Receive Timeout";
+        throw "Receive Timeout: The server took too long to respond.";
       case DioExceptionType.badResponse:
         final errorMessage = responseData is Map<String, dynamic> &&
-                responseData.containsKey('message')
+            responseData.containsKey('message')
             ? responseData['message']
-            : "Unexpected error occurred (${e.response?.statusCode})";
+            : "Unexpected error occurred with status code ${e.response?.statusCode}";
         throw errorMessage;
       case DioExceptionType.cancel:
-        throw "Request Cancelled";
+        throw "Request Cancelled.";
       case DioExceptionType.unknown:
         throw "Unknown Error: ${e.message}";
       default:
         throw "Unexpected Dio Error: ${e.message}";
     }
   }
+
 }

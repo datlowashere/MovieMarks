@@ -51,19 +51,21 @@ class UserModel {
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(
-      id: json['_id'] != null ? json['_id'] as String : "",
-      email: json['email'] != null ? json['email'] as String : "",
-      fullName: json['fullName'] != null ? json['fullName'] as String : "",
-      username: json['username'] != null ? json['username'] as String : "",
-      password: json['password'] != null ? json['password'] as String : "",
+      id: json['_id'] is String ? json['_id'] as String : "",
+      email: json['email'] is String ? json['email'] as String : "",
+      fullName: json['fullName'] is String ? json['fullName'] as String : "",
+      username: json['username'] is String ? json['username'] as String : "",
+      password: json['password'] is String ? json['password'] as String : "",
       accessToken:
-          json['accessToken'] != null ? json['accessToken'] as String : "",
-      avatar: json['avatar'] != null ? json['avatar'] as String : "",
-      createdAt:
-          json['createdAt'] != null ? DateTime.parse(json['createdAt']) : null,
-      updatedAt:
-          json['updatedAt'] != null ? DateTime.parse(json['updatedAt']) : null,
-      code: json['code'] != null ? json['code'] as String : null,
+          json['accessToken'] is String ? json['accessToken'] as String : "",
+      avatar: json['avatar'] is String ? json['avatar'] as String : "",
+      createdAt: json['createdAt'] is String
+          ? DateTime.tryParse(json['createdAt'] as String)
+          : null,
+      updatedAt: json['updatedAt'] is String
+          ? DateTime.tryParse(json['updatedAt'] as String)
+          : null,
+      code: json['code'] is String ? json['code'] as String : null,
     );
   }
 

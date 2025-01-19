@@ -7,10 +7,13 @@ import 'package:movie_marks/constants/app_contants.dart';
 import 'package:movie_marks/data/models/external_ids_model.dart';
 import 'package:movie_marks/data/models/movie_credits_model.dart';
 import 'package:movie_marks/data/models/movie_model.dart';
+import 'package:movie_marks/data/models/review_data_model.dart';
 import 'package:movie_marks/presentation/components/custom_tab_bar.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/bloc/detail_movie_bloc.dart';
+import 'package:movie_marks/presentation/screens/detail_movie/bloc/detail_movie_event.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/bloc/detail_movie_state.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/widgets/app_bar_detail_movie.dart';
+import 'package:movie_marks/presentation/screens/detail_movie/widgets/bottom_sheet_write_review.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/widgets/cast_movie_tab.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/widgets/crew_movie_tab.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/widgets/overview_movie_tab.dart';
@@ -117,8 +120,36 @@ class _DetailMovieBodyState extends State<DetailMovieBody> {
                             movieCreditsModel: state.movieCreditsModel ??
                                 MovieCreditsModel(cast: [], crew: []),
                           ),
-                          AppConstants.reviews:
-                              const ReviewMovieTab(),
+                          AppConstants.reviews: ReviewMovieTab(
+                            reviewData: state.reviewData ??
+                                ReviewDataModel(averageRating: "", reviews: []),
+                            onTapWriteReview: () {
+                              showModalBottomSheet(
+                                  context: context,
+                                  barrierColor: Colors.black.withOpacity(0.5),
+                                  isScrollControlled: true,
+                                  builder: (_) {
+                                    return BottomSheetWriteReview(
+                                      onRatingUpdate: (rate) {
+                                        context.read<DetailMovieBloc>().add(
+                                            DetailMovieRateEvent(
+                                                ratePoint: rate));
+                                      },
+                                      onChanged: (value) {
+                                        context.read<DetailMovieBloc>().add(
+                                            DetailMovieReviewChangedEvent(
+                                                review: value));
+                                      },
+                                      onTapSubmit: () {
+                                        context
+                                            .read<DetailMovieBloc>()
+                                            .add(DetailMovieSubmitRateEvent());
+                                        Navigator.of(context).pop();
+                                      },
+                                    );
+                                  });
+                            },
+                          ),
                         },
                       ),
                     ),
