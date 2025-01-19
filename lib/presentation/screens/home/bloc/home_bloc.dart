@@ -54,7 +54,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         isLoadingPage: event.isLoadingPage,
         listGenres: genres,
         listMovies: movies,
-        user: user, // Assign the user directly from the response
+        user: user,
       ));
     } catch (e) {
       emit(state.copyWith(

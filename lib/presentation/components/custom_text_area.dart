@@ -3,7 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:movie_marks/config/theme/app_colors.dart';
 import 'package:movie_marks/config/theme/app_text_styles.dart';
 
-class CustomEditText extends StatefulWidget {
+class CustomTextArea extends StatefulWidget {
   final String? mainMessage;
   final TextStyle? textStyle;
   final TextStyle? titleStyle;
@@ -12,9 +12,7 @@ class CustomEditText extends StatefulWidget {
   final TextInputType? textInputType;
   final Color? backgroundColor;
   final Color? borderColor;
-  final double? height;
   final int? maxLength;
-  final bool isPasswordInput;
   final Widget? suffix;
   final Widget? prefix;
   final Color? cursorColor;
@@ -26,46 +24,44 @@ class CustomEditText extends StatefulWidget {
   final String? hintText;
   final TextStyle? hintStyle;
   final EdgeInsets? contentPadding;
-  final num? maxLines;
+  final int? maxLines;
+  final double? height, width;
 
-  const CustomEditText(
-      {super.key,
-      this.textStyle,
-      this.titleStyle,
-      this.onChanged,
-      this.textCapitalization,
-      this.textInputType,
-      this.backgroundColor,
-      this.height,
-      this.maxLength,
-      this.isPasswordInput = false,
-      this.suffix,
-      this.borderColor,
-      this.cursorColor,
-      this.inputFormatters,
-      this.enable = true,
-      this.onSubmitted,
-      this.initialValue,
-      this.onLostFocus,
-      this.hintText,
-      this.hintStyle,
-      this.mainMessage,
-      this.prefix,
-      this.contentPadding,
-      this.maxLines});
+  const CustomTextArea({
+    super.key,
+    this.textStyle,
+    this.titleStyle,
+    this.onChanged,
+    this.textCapitalization,
+    this.textInputType,
+    this.backgroundColor,
+    this.maxLength,
+    this.suffix,
+    this.borderColor,
+    this.cursorColor,
+    this.inputFormatters,
+    this.enable = true,
+    this.onSubmitted,
+    this.initialValue,
+    this.onLostFocus,
+    this.hintText,
+    this.hintStyle,
+    this.mainMessage,
+    this.prefix,
+    this.contentPadding,
+    this.maxLines = 5, this.height, this.width,
+  });
 
   @override
-  State<CustomEditText> createState() => _CustomEditTextState();
+  State<CustomTextArea> createState() => _CustomTextAreaState();
 }
 
-class _CustomEditTextState extends State<CustomEditText> {
-  late bool isTextVisible;
+class _CustomTextAreaState extends State<CustomTextArea> {
   late TextEditingController controller;
   late FocusNode focusNode = FocusNode();
 
   @override
   void initState() {
-    isTextVisible = !widget.isPasswordInput;
     focusNode.addListener(_onFocusChange);
     controller = TextEditingController(text: widget.initialValue ?? "");
     super.initState();
@@ -93,22 +89,30 @@ class _CustomEditTextState extends State<CustomEditText> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
+    return Container(
       height: widget.height,
+      width: widget.width,
+      decoration: BoxDecoration(
+        color: widget.backgroundColor ?? Colors.transparent,
+        borderRadius: BorderRadius.circular(8.0),
+        border: Border.all(
+          color: widget.borderColor ?? AppColors.brightGray,
+        ),
+      ),
       child: TextField(
         enabled: widget.enable ?? true,
         style:
-            widget.textStyle ?? AppTextStyles.beVietNamProStyles.regular14White,
+        widget.textStyle ?? AppTextStyles.beVietNamProStyles.regular14White,
         onChanged: widget.onChanged,
         onSubmitted: widget.onSubmitted,
         controller: controller,
         focusNode: focusNode,
+        maxLines: widget.maxLines,
         autofocus: false,
         cursorColor: widget.cursorColor ?? AppColors.brightGray,
         textCapitalization:
-            widget.textCapitalization ?? TextCapitalization.none,
+        widget.textCapitalization ?? TextCapitalization.none,
         keyboardType: widget.textInputType ?? TextInputType.text,
-        obscureText: widget.isPasswordInput ? !isTextVisible : false,
         inputFormatters: [
           if (widget.inputFormatters != null) ...widget.inputFormatters!,
         ],
@@ -117,41 +121,13 @@ class _CustomEditTextState extends State<CustomEditText> {
           hintStyle: widget.hintStyle ??
               AppTextStyles.beVietNamProStyles.regular16White,
           counterText: "",
-          fillColor: widget.enable == false
-              ? AppColors.charlestonGreen
-              : widget.backgroundColor,
+          fillColor: widget.backgroundColor,
           filled: true,
           prefixIcon: widget.prefix,
-          suffixIcon: widget.isPasswordInput
-              ? GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      isTextVisible = !isTextVisible;
-                    });
-                  },
-                  child: Icon(
-                    isTextVisible ? Icons.visibility : Icons.visibility_off,
-                    color: AppColors.brightGray,
-                  ),
-                )
-              : widget.suffix,
+          suffixIcon: widget.suffix,
           contentPadding: widget.contentPadding ??
               const EdgeInsets.symmetric(vertical: 12.0, horizontal: 11.5),
-          border: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: widget.borderColor ?? AppColors.brightGray,
-            ),
-          ),
-          enabledBorder: UnderlineInputBorder(
-            borderSide: BorderSide(
-              color: widget.borderColor ?? AppColors.brightGray,
-            ),
-          ),
-          focusedBorder: const UnderlineInputBorder(
-              borderSide: BorderSide(color: AppColors.eucalyptus)),
-          errorBorder: UnderlineInputBorder(
-              borderSide:
-                  BorderSide(color: widget.borderColor ?? AppColors.brinkPink)),
+          border: InputBorder.none,
         ),
         maxLength: widget.maxLength,
       ),

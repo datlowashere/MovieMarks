@@ -67,6 +67,13 @@ class AppConstants {
   static const no = "No";
   static const logoutSuccess = "Logout successful!";
   static const loginSuccess = "Login successful!";
-  static const registerSuccess = "Register successful!";
+  static const noReviews = "There's no review to show!";
+  static const noBookmark = "There's no bookmark to show!";
+  static const alert = "Alert";
+  static const haveToLogin = "You have to login first to use this feature!";
+  static const goToLogin = "Go to login";
+  static const writeAReview = "Write a review";
+  static const submit = "Submit";
+  static const clear = "Clear";
 
 }
