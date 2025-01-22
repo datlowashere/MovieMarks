@@ -84,6 +84,11 @@ class _ReviewMovieTabState extends State<ReviewMovieTab> {
         const SizedBox(
           height: 12,
         ),
+        widget.reviewData.reviews.isEmpty ?
+        CustomTitle(
+          title: AppConstants.noReviews,
+          style: AppTextStyles.beVietNamProStyles.medium12White,
+        ):
         ListView.separated(
             shrinkWrap: true,
             itemBuilder: (context, index) {

@@ -86,6 +86,7 @@ class _DialogLoginRequestState extends State<DialogLoginRequest> {
                   child: CustomButton(
                     title: AppConstants.goToLogin,
                     onTap: () {
+                      Navigator.of(context).pop();
                       Navigator.pushNamed(context, AppRoutes.login);
                     },
                     backgroundColor: AppColors.eucalyptus,

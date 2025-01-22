@@ -25,7 +25,7 @@ class ReviewDataModel {
     return ReviewDataModel(
       averageRating: json['averageRating'] is String
           ? json['averageRating'] as String
-          : "",
+          : "0.0",
       reviews: reviews,
     );
   }
