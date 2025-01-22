@@ -42,7 +42,8 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
           await reviewRepository.getReviewsById(event.movieId.toString());
       final reviewData = reviewEither.fold(
         (error) {
-          return null;
+          final emptyReview = ReviewDataModel(averageRating: "0", reviews: []);
+          return emptyReview;
         },
         (response) {
           return response;

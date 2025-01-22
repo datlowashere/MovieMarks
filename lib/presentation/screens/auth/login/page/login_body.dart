@@ -68,7 +68,8 @@ class _LoginBodyState extends State<LoginBody>
                   prefix: SvgPicture.asset(AppIcons.arrowBack.svgAssetPath),
                   backgroundColor: AppColors.arsenic,
                   onTap: () {
-                    Navigator.popUntil(context, ModalRoute.withName('/'));
+                    Navigator.of(context).pop();
+                    // Navigator.popUntil(context, ModalRoute.withName('/'));
                   },
                 ),
               ),
