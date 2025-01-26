@@ -23,6 +23,9 @@ class BottomSheetWriteReview extends StatefulWidget {
 }
 
 class _BottomSheetWriteReviewState extends State<BottomSheetWriteReview> {
+  String _reviewText = '';
+  double _rating = 0;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -65,6 +68,9 @@ class _BottomSheetWriteReviewState extends State<BottomSheetWriteReview> {
                     color: Colors.amber,
                   ),
                   onRatingUpdate: (double value) {
+                    setState(() {
+                      _rating = value;
+                    });
                     widget.onRatingUpdate(value);
                   },
                 ),
@@ -76,7 +82,12 @@ class _BottomSheetWriteReviewState extends State<BottomSheetWriteReview> {
                   backgroundColor: AppColors.arsenic,
                   borderColor: Colors.transparent,
                   textInputType: TextInputType.multiline,
-                  onChanged: widget.onChanged,
+                  onChanged: (value) {
+                    setState(() {
+                      _reviewText = value;
+                    });
+                    widget.onChanged(value);
+                  },
                   maxLines: null,
                   height: 200,
                 ),
@@ -87,13 +98,17 @@ class _BottomSheetWriteReviewState extends State<BottomSheetWriteReview> {
                   alignment: Alignment.bottomRight,
                   child: CustomButton(
                     title: AppConstants.submit,
-                    backgroundColor: AppColors.arsenic,
+                    backgroundColor: _reviewText.trim().isEmpty || _rating <= 0
+                        ? AppColors.arsenic
+                        : AppColors.eucalyptus,
                     titleStyle: AppTextStyles.beVietNamProStyles.bold16White,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                    onTap: widget.onTapSubmit,
+                    onTap: _reviewText.trim().isEmpty || _rating <= 0
+                        ? null
+                        : widget.onTapSubmit,
                   ),
-                )
+                ),
               ],
             ),
           ),

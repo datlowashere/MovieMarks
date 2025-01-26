@@ -43,7 +43,7 @@ final class VerificationState extends Equatable {
       status: status ?? this.status,
       userModel: userModel ?? this.userModel,
       isEnabled: isEnabled ?? this.isEnabled,
-      isShowMessageCode: isShowMessageOtp ?? this.isShowMessageCode,
+      isShowMessageCode: isShowMessageOtp ?? isShowMessageCode,
       inputCode: inputCode ?? this.inputCode,
       remainingSeconds: remainingSeconds ?? this.remainingSeconds,
       messageCode: messageCode ?? this.messageCode,

@@ -9,7 +9,6 @@ class ReviewRepository {
 
   Future<Either<String, ReviewModel>> createReview(
       ReviewModel reviewModel) async {
-    print("ReviewData:${reviewModel.postToJson()}");
     try {
       final response = await _apiService.request(
         ApiUrls.reviewEndPoint,
@@ -18,9 +17,9 @@ class ReviewRepository {
       );
 
       final review = ReviewModel.fromJson(response.data['review']);
+
       return Right(review);
     } catch (e) {
-      print("Error create review: $e");
       return Left(e.toString());
     }
   }

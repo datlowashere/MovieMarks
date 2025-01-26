@@ -15,6 +15,7 @@ final class HomeState extends Equatable {
   final bool isLoadingPage;
   final List<GenreModel>? listGenres;
   final List<MovieModel>? listMovies;
+  final List<MovieModel>? listBookmark;
   final List<GenreModel>? selectedGenres;
   final UserModel? user;
 
@@ -23,6 +24,7 @@ final class HomeState extends Equatable {
       this.isLoadingPage = false,
       this.listGenres,
       this.listMovies,
+      this.listBookmark,
       this.selectedGenres,
       this.user});
 
@@ -35,6 +37,7 @@ final class HomeState extends Equatable {
       bool? isLoadingPage,
       List<GenreModel>? listGenres,
       List<MovieModel>? listMovies,
+      List<MovieModel>? listBookmark,
       List<GenreModel>? selectedGenres,
       UserModel? user}) {
     return HomeState(
@@ -42,11 +45,12 @@ final class HomeState extends Equatable {
         isLoadingPage: isLoadingPage ?? this.isLoadingPage,
         listGenres: listGenres ?? this.listGenres,
         listMovies: listMovies ?? this.listMovies,
+        listBookmark: listBookmark ?? this.listBookmark,
         selectedGenres: selectedGenres ?? this.selectedGenres,
         user: user ?? this.user);
   }
 
   @override
   List<Object?> get props =>
-      [status, isLoadingPage, listGenres, listMovies, selectedGenres, user];
+      [status, isLoadingPage, listGenres, listMovies, listBookmark, selectedGenres, user];
 }

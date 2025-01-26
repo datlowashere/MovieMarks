@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:movie_marks/config/theme/app_colors.dart';
 import 'package:movie_marks/config/theme/app_text_styles.dart';

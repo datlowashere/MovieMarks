@@ -3,6 +3,7 @@ import 'package:movie_marks/data/data_sources/local/shared_preferences.dart';
 import 'package:movie_marks/data/models/review_data_model.dart';
 import 'package:movie_marks/data/models/review_model.dart';
 import 'package:movie_marks/data/models/user_model.dart';
+import 'package:movie_marks/data/repository/bookmark_repository.dart';
 import 'package:movie_marks/data/repository/cast_crew_repository.dart';
 import 'package:movie_marks/data/repository/movie_repository.dart';
 import 'package:movie_marks/data/repository/review_repository.dart';
@@ -15,12 +16,16 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
   final SearchRepository searchRepository = SearchRepository();
   final CastCrewRepository castCrewRepository = CastCrewRepository();
   final ReviewRepository reviewRepository = ReviewRepository();
+  final BookmarkRepository bookmarkRepository = BookmarkRepository();
+  final userId = SharedPrefer.sharedPrefer.getUserId();
 
   DetailMovieBloc() : super(DetailMovieState.initial()) {
     on<DetailMovieInitialEvent>(_onDetailMovieInitialEvent);
     on<DetailMovieReviewChangedEvent>(_onDetailMovieReviewChangedEvent);
     on<DetailMovieRateEvent>(_onDetailMovieRateEvent);
     on<DetailMovieSubmitRateEvent>(_onDetailMovieSubmitRateEvent);
+    on<DetailMovieToggleBookmarkEvent>(_onDetailMovieToggleBookmarkEvent);
+    on<DetailMovieBackEvent>(_onDetailMovieBackEvent);
   }
 
   void _onDetailMovieInitialEvent(
@@ -49,14 +54,17 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
           return response;
         },
       );
-      print("id: ${event.movieId}");
-
-      print("reviewData: ${reviewData}");
+      final userAverageRating =
+          calculateUserAverageRating(userId, reviewData.reviews);
+      final overAllRating = calculateNewAverageRating(reviewData.reviews);
 
       emit(state.copyWith(
           status: DetailMovieStatus.success,
           isLoadingPage: event.isLoadingPage,
-          movieModel: movie,
+          movieModel: movie.copyWith(
+              isSaved: event.isSaved,
+              overallAverageRating: overAllRating.toString(),
+              userAverageRating: userAverageRating.toString()),
           movieId: event.movieId,
           keywords: keywords,
           externalIdsModel: externalIds,
@@ -82,7 +90,6 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
 
   void _onDetailMovieSubmitRateEvent(
       DetailMovieSubmitRateEvent event, Emitter<DetailMovieState> emit) async {
-    final userId = SharedPrefer.sharedPrefer.getUserId();
     final userAvatar = SharedPrefer.sharedPrefer.getAvatar();
     final username = SharedPrefer.sharedPrefer.getUsername();
 
@@ -93,28 +100,82 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
         ratingPoint: state.ratePoint);
 
     final userInfo = UserModel(
-        email: "", password: '', username: username, avatar: userAvatar);
+        email: "",
+        password: '',
+        username: username,
+        avatar: userAvatar,
+        id: userId);
+
+    final existingReviewData = state.reviewData;
 
     final result = await reviewRepository.createReview(review);
-    result.fold((error) {}, (response) {
-      final existingReviewData = state.reviewData;
-
+    result.fold((error) {
+      emit(state.copyWith(status: DetailMovieStatus.failure));
+    }, (response) {
       final updatedReviews = [
         response.copyWith(user: userInfo),
         if (existingReviewData?.reviews != null) ...existingReviewData!.reviews,
       ];
 
+      final averageRating = calculateNewAverageRating(updatedReviews);
+
       final updatedReviewData = existingReviewData?.copyWith(
               reviews: updatedReviews,
-              averageRating:
-                  calculateNewAverageRating(updatedReviews).toString()) ??
+              averageRating: averageRating.toString()) ??
           ReviewDataModel(
             reviews: [response],
-            averageRating: "${calculateNewAverageRating(updatedReviews)}",
+            averageRating: averageRating.toString(),
           );
 
-      emit(state.copyWith(reviewData: updatedReviewData));
+      final userAverageRating =
+          calculateUserAverageRating(userId, updatedReviews);
+
+      final movieModelUpdate = state.movieModel?.copyWith(
+          overallAverageRating: averageRating.toString(),
+          userAverageRating: userAverageRating.toString());
+
+      emit(state.copyWith(
+          reviewData: updatedReviewData, movieModel: movieModelUpdate));
     });
+  }
+
+  void _onDetailMovieToggleBookmarkEvent(DetailMovieToggleBookmarkEvent event,
+      Emitter<DetailMovieState> emit) async {
+    final result = await bookmarkRepository.toggleBookmark(
+      movieModel: event.movieModel,
+    );
+    result.fold(
+      (error) {
+        emit(state.copyWith(status: DetailMovieStatus.failure));
+      },
+      (response) {
+        final userAverageRating =
+            calculateUserAverageRating(userId, event.reviews);
+        final overAllRating = calculateNewAverageRating(event.reviews);
+        final updatedMovieModel = state.movieModel?.copyWith(
+            isSaved: !(state.movieModel?.isSaved ?? false),
+            overallAverageRating: overAllRating.toString(),
+            userAverageRating: userAverageRating.toString());
+
+        emit(state.copyWith(
+          movieModel: updatedMovieModel,
+          status: DetailMovieStatus.success,
+        ));
+      },
+    );
+  }
+
+  void _onDetailMovieBackEvent(
+      DetailMovieBackEvent event, Emitter<DetailMovieState> emit) async {
+    final userAverageRating = calculateUserAverageRating(userId, event.reviews);
+    final overAllRating = calculateNewAverageRating(event.reviews);
+
+    emit(state.copyWith(
+      movieModel: event.movieModel.copyWith(
+          userAverageRating: userAverageRating.toString(),
+          overallAverageRating: overAllRating.toString()),
+      status: DetailMovieStatus.success,
+    ));
   }
 
   double calculateNewAverageRating(List<ReviewModel> reviews) {
@@ -123,6 +184,21 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
       (sum, review) => sum + (review.ratingPoint ?? 0.0),
     );
     final average = reviews.isNotEmpty ? totalRating / reviews.length : 0.0;
+    return double.parse(average.toStringAsFixed(2));
+  }
+
+  double calculateUserAverageRating(String userId, List<ReviewModel> reviews) {
+    final userReviews =
+        reviews.where((review) => review.user?.id == userId).toList();
+
+    final totalRating = userReviews.fold<double>(
+      0.0,
+      (sum, review) => sum + (review.ratingPoint ?? 0.0),
+    );
+
+    final average =
+        userReviews.isNotEmpty ? totalRating / userReviews.length : 0.0;
+
     return double.parse(average.toStringAsFixed(2));
   }
 }

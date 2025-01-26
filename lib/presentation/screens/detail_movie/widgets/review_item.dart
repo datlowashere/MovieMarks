@@ -55,6 +55,7 @@ class _ReviewItemState extends State<ReviewItem> {
                       initialRating: widget.ratingPoint ?? 0,
                       minRating: 1,
                       direction: Axis.horizontal,
+                      ignoreGestures: true,
                       allowHalfRating: true,
                       itemCount: 5,
                       itemSize: 20.0,

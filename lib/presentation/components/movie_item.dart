@@ -84,7 +84,7 @@ class MovieItemState extends State<MovieItem>
           marginBottom: 5,
           betweenSpacing: 0,
           title: AppConstants.title,
-          content: widget.movieModel?.originalTitle ?? "",
+          content: widget.movieModel?.title ?? "",
         ),
         CustomTextPair(
           marginBottom: 5,
@@ -96,7 +96,7 @@ class MovieItemState extends State<MovieItem>
           marginBottom: 5,
           betweenSpacing: 0,
           title: AppConstants.averageRating,
-          content: widget.movieModel?.voteAverage?.toString() ?? "",
+          content: widget.movieModel?.overallAverageRating ?? "0.00",
         ),
       ],
     );
@@ -148,7 +148,7 @@ class MovieItemState extends State<MovieItem>
           child: IconButton(
             onPressed: () {},
             icon: SvgPicture.asset(
-              widget.movieModel?.isRating == true
+              widget.movieModel?.userAverageRating != '0.00'
                   ? AppIcons.starFilled.svgAssetPath
                   : AppIcons.star.svgAssetPath,
             ),
@@ -159,7 +159,9 @@ class MovieItemState extends State<MovieItem>
         Padding(
           padding: const EdgeInsets.only(top: 1),
           child: Text(
-            widget.movieModel?.isRating == true ? "9.5" : "na",
+            (widget.movieModel?.userAverageRating ?? "n/a") == "0.00"
+                ? "n/a"
+                : (widget.movieModel?.userAverageRating ?? "n/a"),
             textAlign: TextAlign.center,
             style: AppTextStyles.beVietNamProStyles.regular12White.copyWith(
               color: widget.movieModel?.isRating == true

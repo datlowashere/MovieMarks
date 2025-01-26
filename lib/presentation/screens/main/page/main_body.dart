@@ -7,6 +7,7 @@ import 'package:movie_marks/presentation/screens/home/page/home_page.dart';
 import 'package:movie_marks/presentation/screens/main/bloc/main_bloc.dart';
 import 'package:movie_marks/presentation/screens/main/bloc/main_state.dart';
 import 'package:movie_marks/presentation/screens/settings/page/setting_page.dart';
+import 'package:movie_marks/presentation/screens/watch_list/page/watch_list_page.dart';
 
 class MainBody extends StatefulWidget {
   const MainBody({super.key});
@@ -20,7 +21,7 @@ class _MainBodyState extends State<MainBody> {
 
   final List<Widget> tabItems = [
     const HomePage(),
-    const Center(child: Text("Bookmark Page")),
+    const WatchListPage(),
     const SettingPage(),
   ];
 
