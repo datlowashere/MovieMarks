@@ -6,8 +6,9 @@ import 'package:movie_marks/presentation/screens/detail_movie/page/detail_movie_
 
 class DetailMoviePage extends StatelessWidget {
   final int? movieId;
+  final bool? isSaved;
 
-  const DetailMoviePage({super.key, this.movieId});
+  const DetailMoviePage({super.key, this.movieId, this.isSaved});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,8 @@ class DetailMoviePage extends StatelessWidget {
       create: (context) => DetailMovieBloc()
         ..add(DetailMovieInitialEvent(
             isLoadingPage: isLoadingPage,
-            movieId: movieId ?? 0)),
+            movieId: movieId ?? 0,
+            isSaved: isSaved ?? false)),
       child: const DetailMovieBody(),
     );
   }

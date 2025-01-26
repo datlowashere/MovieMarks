@@ -5,8 +5,11 @@ import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:movie_marks/config/theme/app_colors.dart';
 import 'package:movie_marks/config/theme/app_text_styles.dart';
 import 'package:movie_marks/constants/app_contants.dart';
+import 'package:movie_marks/data/data_sources/local/shared_preferences.dart';
+import 'package:movie_marks/data/models/movie_model.dart';
 import 'package:movie_marks/presentation/components/custom_button.dart';
 import 'package:movie_marks/presentation/components/custom_title.dart';
+import 'package:movie_marks/presentation/components/dialog_login_request.dart';
 import 'package:movie_marks/presentation/components/movie_item.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/page/detail_movie_page.dart';
 import 'package:movie_marks/presentation/screens/home/bloc/home_bloc.dart';
@@ -24,6 +27,7 @@ class HomeBody extends StatefulWidget {
 class _HomeBodyState extends State<HomeBody> {
   @override
   Widget build(BuildContext context) {
+    final accessToken = SharedPrefer.sharedPrefer.getUserToken();
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
         state.status == HomeStatus.processing
@@ -101,8 +105,7 @@ class _HomeBodyState extends State<HomeBody> {
                     const SizedBox(
                       height: 29,
                     ),
-                    state.listMovies?.isEmpty ?? true
-                        ? Expanded(
+                    if (state.listMovies?.isEmpty ?? true) Expanded(
                             child: Center(
                               child: CustomTitle(
                                 title: AppConstants.emptyMovie,
@@ -111,8 +114,7 @@ class _HomeBodyState extends State<HomeBody> {
                                 textAlign: TextAlign.center,
                               ),
                             ),
-                          )
-                        : Expanded(
+                          ) else Expanded(
                             child: LazyLoadScrollView(
                               onEndOfPage: () {
                                 context
@@ -126,17 +128,36 @@ class _HomeBodyState extends State<HomeBody> {
                                   addAutomaticKeepAlives: true,
                                   itemCount: state.listMovies?.length ?? 0,
                                   itemBuilder: (context, index) {
+                                    final movie = state.listMovies?[index];
                                     return MovieItem(
                                       index: index,
-                                      movieModel: state.listMovies?[index],
+                                      movieModel: movie,
+                                      isShowReadMore: false,
                                       onTapMovie: () {
                                         Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (_) => DetailMoviePage(
-                                                  movieId: state
-                                                      .listMovies?[index].id),
-                                            ));
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (_) => DetailMoviePage(
+                                              movieId: movie?.id,
+                                              isSaved: movie?.isSaved,
+                                            ),
+                                          ),
+                                        ).then((updatedMovieModel) {
+                                          if (updatedMovieModel != null && updatedMovieModel is MovieModel) {
+                                            context.read<HomeBloc>().add(HomeUpdateMovieEvent(updatedMovieModel));
+                                          }
+                                        });
+                                      },
+                                      onTapBookmark: () {
+                                        accessToken.isNotEmpty
+                                            ? context.read<HomeBloc>().add(
+                                                HomeToggleBookmarkEvent(
+                                                    movie ?? MovieModel()))
+                                            : showDialog(
+                                                context: context,
+                                                builder: (context) =>
+                                                    const DialogLoginRequest(),
+                                              );
                                       },
                                     );
                                   },

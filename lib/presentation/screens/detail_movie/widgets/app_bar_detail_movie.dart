@@ -32,7 +32,9 @@ class AppBarDetailMovie extends StatelessWidget {
       ),
       actions: [
         CustomButton(
-          prefix: SvgPicture.asset(AppIcons.bookmark.svgAssetPath),
+          prefix: SvgPicture.asset(movieModel.isSaved
+              ? AppIcons.bookmarkFilled.svgAssetPath
+              : AppIcons.bookmark.svgAssetPath),
           onTap: onTapBookMark,
           backgroundColor: Colors.transparent,
         ),
@@ -69,19 +71,18 @@ class AppBarDetailMovie extends StatelessWidget {
     return Positioned.fill(
       bottom: 60,
       child: ClipRRect(
-        borderRadius: const BorderRadius.only(
-          bottomLeft: Radius.circular(16),
-          bottomRight: Radius.circular(16),
-        ),
-        child: Image.network(
-          ApiUrls.imageUrl + (movieModel.backdropPath ?? ""),
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) => Image.asset(
-            AppImages.defaultPicker.pngAssetPath,
-            fit: BoxFit.cover,
+          borderRadius: const BorderRadius.only(
+            bottomLeft: Radius.circular(16),
+            bottomRight: Radius.circular(16),
           ),
-        )
-      ),
+          child: Image.network(
+            ApiUrls.imageUrl + (movieModel.backdropPath ?? ""),
+            fit: BoxFit.cover,
+            errorBuilder: (context, error, stackTrace) => Image.asset(
+              AppImages.defaultPicker.pngAssetPath,
+              fit: BoxFit.cover,
+            ),
+          )),
     );
   }
 
@@ -102,7 +103,9 @@ class AppBarDetailMovie extends StatelessWidget {
               style: AppTextStyles.beVietNamProStyles.semiBold18White,
             ),
           ),
-          const SizedBox(width: 10,)
+          const SizedBox(
+            width: 10,
+          )
         ],
       ),
     );
@@ -117,16 +120,15 @@ class AppBarDetailMovie extends StatelessWidget {
         borderRadius: BorderRadius.circular(16),
       ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(16),
-        child: Image.network(
-          ApiUrls.imageUrl + (movieModel.posterPath ?? ""),
-          fit: BoxFit.cover,
-          errorBuilder: (context, error, stackTrace) => Image.asset(
-            AppImages.defaultPicker.pngAssetPath,
+          borderRadius: BorderRadius.circular(16),
+          child: Image.network(
+            ApiUrls.imageUrl + (movieModel.posterPath ?? ""),
             fit: BoxFit.cover,
-          ),
-        )
-      ),
+            errorBuilder: (context, error, stackTrace) => Image.asset(
+              AppImages.defaultPicker.pngAssetPath,
+              fit: BoxFit.cover,
+            ),
+          )),
     );
   }
 }
