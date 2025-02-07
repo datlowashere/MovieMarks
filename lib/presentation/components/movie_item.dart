@@ -13,6 +13,7 @@ import 'custom_text_pair.dart';
 class MovieItem extends StatefulWidget {
   final bool? isShowRating;
   final bool? isShowReadMore;
+  final bool isShowActionRow;
   final MovieModel? movieModel;
   final int? index;
   final VoidCallback? onTapMovie;
@@ -26,6 +27,7 @@ class MovieItem extends StatefulWidget {
     this.movieModel,
     this.onTapBookmark,
     this.onTapMovie,
+    this.isShowActionRow = true,
   });
 
   @override
@@ -46,7 +48,9 @@ class MovieItemState extends State<MovieItem>
         color: AppColors.charlestonGreen,
         margin: EdgeInsets.only(top: widget.index == 0 ? 0 : 18),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: widget.isShowActionRow
+              ? CrossAxisAlignment.start
+              : CrossAxisAlignment.end,
           children: [
             _buildPosterImage(),
             Expanded(child: _buildMovieDetails()),
@@ -95,23 +99,32 @@ class MovieItemState extends State<MovieItem>
         CustomTextPair(
           marginBottom: 5,
           betweenSpacing: 0,
-          title: AppConstants.averageRating,
-          content: widget.movieModel?.overallAverageRating ?? "0.00",
+          title: widget.isShowActionRow
+              ? AppConstants.averageRating
+              : AppConstants.popularity,
+          content: widget.isShowActionRow
+              ? (widget.movieModel?.overallAverageRating ?? "0.00")
+              : (widget.movieModel?.popularity.toString() ?? "0.00"),
         ),
       ],
     );
   }
 
   Widget _buildActions() {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.only(right: 29),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          _buildBookmarkButton(),
-          const SizedBox(height: 18),
-          if (widget.isShowRating ?? true) _buildRatingWidget(),
-          const SizedBox(height: 60),
+          if (widget.isShowActionRow)
+            Column(
+              children: [
+                _buildBookmarkButton(),
+                const SizedBox(height: 18),
+                if (widget.isShowRating ?? true) _buildRatingWidget(),
+                const SizedBox(height: 60),
+              ],
+            ),
           if (widget.isShowReadMore ?? true)
             Text(
               AppConstants.readMore,

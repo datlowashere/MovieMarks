@@ -12,6 +12,7 @@ class AppConstants {
   static const readMore = "Read More";
   static const rateCount = "Rate Count";
   static const genreTitle = "Categories";
+  static const genre = "Genre";
   static const emptyMovie = "No movies found.";
   static const overview = "Overviews";
   static const reviews = "Reviews";
