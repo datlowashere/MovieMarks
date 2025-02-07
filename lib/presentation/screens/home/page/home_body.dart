@@ -11,6 +11,7 @@ import 'package:movie_marks/presentation/components/custom_button.dart';
 import 'package:movie_marks/presentation/components/custom_title.dart';
 import 'package:movie_marks/presentation/components/dialog_login_request.dart';
 import 'package:movie_marks/presentation/components/movie_item.dart';
+import 'package:movie_marks/presentation/routes/app_route.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/page/detail_movie_page.dart';
 import 'package:movie_marks/presentation/screens/home/bloc/home_bloc.dart';
 import 'package:movie_marks/presentation/screens/home/bloc/home_event.dart';
@@ -45,7 +46,9 @@ class _HomeBodyState extends State<HomeBody> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     AppBarHome(
-                      onTapSearch: () {},
+                      onTapSearch: () {
+                        Navigator.pushNamed(context, AppRoutes.search);
+                      },
                       userModel: state.user,
                     ),
                     CustomTitle(
@@ -105,69 +108,75 @@ class _HomeBodyState extends State<HomeBody> {
                     const SizedBox(
                       height: 29,
                     ),
-                    if (state.listMovies?.isEmpty ?? true) Expanded(
-                            child: Center(
-                              child: CustomTitle(
-                                title: AppConstants.emptyMovie,
-                                style: AppTextStyles
-                                    .beVietNamProStyles.regular14White,
-                                textAlign: TextAlign.center,
-                              ),
-                            ),
-                          ) else Expanded(
-                            child: LazyLoadScrollView(
-                              onEndOfPage: () {
-                                context
-                                    .read<HomeBloc>()
-                                    .add(HomeLoadMoreMoviesEvent());
+                    if (state.listMovies?.isEmpty ?? true)
+                      Expanded(
+                        child: Center(
+                          child: CustomTitle(
+                            title: AppConstants.emptyMovie,
+                            style:
+                                AppTextStyles.beVietNamProStyles.regular14White,
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      )
+                    else
+                      Expanded(
+                        child: LazyLoadScrollView(
+                          onEndOfPage: () {
+                            context
+                                .read<HomeBloc>()
+                                .add(HomeLoadMoreMoviesEvent());
+                          },
+                          isLoading: state.status == HomeStatus.processing,
+                          child: Container(
+                            margin: const EdgeInsets.only(left: 29),
+                            child: ListView.separated(
+                              addAutomaticKeepAlives: true,
+                              itemCount: state.listMovies?.length ?? 0,
+                              itemBuilder: (context, index) {
+                                final movie = state.listMovies?[index];
+                                return MovieItem(
+                                  index: index,
+                                  movieModel: movie,
+                                  isShowReadMore: false,
+                                  onTapMovie: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => DetailMoviePage(
+                                          movieId: movie?.id,
+                                          isSaved: movie?.isSaved,
+                                        ),
+                                      ),
+                                    ).then((updatedMovieModel) {
+                                      if (updatedMovieModel != null &&
+                                          updatedMovieModel is MovieModel) {
+                                        context.read<HomeBloc>().add(
+                                            HomeUpdateMovieEvent(
+                                                updatedMovieModel));
+                                      }
+                                    });
+                                  },
+                                  onTapBookmark: () {
+                                    accessToken.isNotEmpty
+                                        ? context.read<HomeBloc>().add(
+                                            HomeToggleBookmarkEvent(
+                                                movie ?? MovieModel()))
+                                        : showDialog(
+                                            context: context,
+                                            builder: (context) =>
+                                                const DialogLoginRequest(),
+                                          );
+                                  },
+                                );
                               },
-                              isLoading: state.status == HomeStatus.processing,
-                              child: Container(
-                                margin: const EdgeInsets.only(left: 29),
-                                child: ListView.separated(
-                                  addAutomaticKeepAlives: true,
-                                  itemCount: state.listMovies?.length ?? 0,
-                                  itemBuilder: (context, index) {
-                                    final movie = state.listMovies?[index];
-                                    return MovieItem(
-                                      index: index,
-                                      movieModel: movie,
-                                      isShowReadMore: false,
-                                      onTapMovie: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (_) => DetailMoviePage(
-                                              movieId: movie?.id,
-                                              isSaved: movie?.isSaved,
-                                            ),
-                                          ),
-                                        ).then((updatedMovieModel) {
-                                          if (updatedMovieModel != null && updatedMovieModel is MovieModel) {
-                                            context.read<HomeBloc>().add(HomeUpdateMovieEvent(updatedMovieModel));
-                                          }
-                                        });
-                                      },
-                                      onTapBookmark: () {
-                                        accessToken.isNotEmpty
-                                            ? context.read<HomeBloc>().add(
-                                                HomeToggleBookmarkEvent(
-                                                    movie ?? MovieModel()))
-                                            : showDialog(
-                                                context: context,
-                                                builder: (context) =>
-                                                    const DialogLoginRequest(),
-                                              );
-                                      },
-                                    );
-                                  },
-                                  separatorBuilder: (context, index) {
-                                    return const SizedBox(height: 12);
-                                  },
-                                ),
-                              ),
+                              separatorBuilder: (context, index) {
+                                return const SizedBox(height: 12);
+                              },
                             ),
                           ),
+                        ),
+                      ),
                   ]),
             )),
           );
