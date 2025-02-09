@@ -4,6 +4,7 @@ import 'package:movie_marks/presentation/screens/auth/register/page/register_pag
 import 'package:movie_marks/presentation/screens/detail_movie/page/detail_movie_page.dart';
 import 'package:movie_marks/presentation/screens/main/page/main_page.dart';
 import 'package:movie_marks/presentation/screens/search/page/search_page.dart';
+import 'package:movie_marks/presentation/screens/settings/screens/user_profile/page/user_profile_page.dart';
 
 class AppRoutes {
   static const String main = '/home';
@@ -11,6 +12,7 @@ class AppRoutes {
   static const String login = '/login';
   static const String register = '/register';
   static const String search = '/search';
+  static const String profile = '/profile';
 
   static getInitialRoute() {
     return '/';
@@ -23,7 +25,8 @@ class AppRoutes {
       detailMovie: (BuildContext context) => const DetailMoviePage(),
       login: (BuildContext context) => const LoginPage(),
       register: (BuildContext context) => const RegisterPage(),
-      search: (BuildContext context) => const SearchPage()
+      search: (BuildContext context) => const SearchPage(),
+      profile: (BuildContext context) => const UserProfilePage()
     };
   }
 }

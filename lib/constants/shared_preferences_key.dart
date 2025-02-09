@@ -3,5 +3,6 @@ class SharedPreferencesKey {
   static const String avatar = "avatar";
   static const String idUser = "_id";
   static const String username = "username";
+  static const String email = "email";
 
 }

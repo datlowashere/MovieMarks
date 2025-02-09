@@ -23,7 +23,9 @@ enum AppIcons {
   login,
   safety,
   about,
-  review
+  review,
+  addCamera,
+  gallery
 }
 
 extension AppIconsExtension on AppIcons {

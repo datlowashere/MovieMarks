@@ -21,4 +21,24 @@ class InputValidationHelper {
     }
     return null;
   }
+
+  static String? validateUsername(String username) {
+    if (username.length < 4) {
+      return 'Username must be at least 4 characters long';
+    }
+    if (username.length > 25) {
+      return 'Username must not exceed 25 characters';
+    }
+    return null;
+  }
+
+  static String? validateFullName(String fullName) {
+    if (fullName.length < 6) {
+      return 'Username must be at least 6 characters long';
+    }
+    if (fullName.length > 128) {
+      return 'Username must not exceed 128 characters';
+    }
+    return null;
+  }
 }

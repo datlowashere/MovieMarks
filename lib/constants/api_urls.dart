@@ -1,5 +1,5 @@
 class ApiUrls {
-  static const baseUrl = "http://192.168.1.5:3000/api/";
+  static const baseUrl = "https://moviemarks-be.onrender.com/api/";
   static const tmdbApiBaseUrl = "https://api.themoviedb.org/3/";
   static const imageUrl = "https://image.tmdb.org/t/p/w500";
   static const genreEndPoint = "genre/movie/list";
@@ -21,5 +21,6 @@ class ApiUrls {
   static const reviewEndPoint = "reviews";
   static const addBookmarkEndPoint = "bookmarks/add";
   static const searchEndPoint = "search/movie?";
+  static const updateUser = "update";
 
 }

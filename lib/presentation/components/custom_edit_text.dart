@@ -71,6 +71,14 @@ class _CustomEditTextState extends State<CustomEditText> {
     super.initState();
   }
 
+  @override
+  void didUpdateWidget(covariant CustomEditText oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    if (oldWidget.initialValue != widget.initialValue) {
+      controller.text = widget.initialValue ?? "";
+    }
+  }
+
   void _onFocusChange() {
     if (!focusNode.hasFocus) {
       String trimmedText = controller.text.trim();

@@ -15,6 +15,7 @@ import 'package:movie_marks/presentation/routes/app_route.dart';
 import 'package:movie_marks/presentation/screens/settings/bloc/setting_bloc.dart';
 import 'package:movie_marks/presentation/screens/settings/bloc/setting_event.dart';
 import 'package:movie_marks/presentation/screens/settings/bloc/setting_state.dart';
+import 'package:movie_marks/presentation/screens/settings/screens/user_profile/page/user_profile_page.dart';
 import 'package:movie_marks/presentation/screens/settings/widgets/dialog_confirm_logout.dart';
 import 'package:movie_marks/presentation/screens/settings/widgets/menu_option.dart';
 
@@ -79,7 +80,9 @@ class _SettingBodyState extends State<SettingBody> {
       padding: const EdgeInsets.symmetric(horizontal: 29, vertical: 8),
       backgroundColor: AppColors.arsenic,
       isExpanded: true,
-      title: state.user?.fullName ?? "",
+      title: state.user?.fullName?.isEmpty ?? true
+          ? state.user?.username ?? ""
+          : state.user?.fullName ?? "",
       subTitle: state.user?.email ?? "",
       subTitleStyle: AppTextStyles.beVietNamProStyles.regular12White,
       titleAlign: TextAlign.start,
@@ -89,21 +92,41 @@ class _SettingBodyState extends State<SettingBody> {
       textMarginLeft: 12,
       borderRadius: 0,
       isFullWidth: true,
-      onTap: () {},
+      onTap: () async {
+        final result = await Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => const UserProfilePage()),
+        );
+
+        if (result == true) {
+          context.read<SettingBloc>().add(SettingGetUserProfileEvent());
+        }
+      },
     );
   }
 
-  List<Widget> _buildMenuOptions(BuildContext context, SettingState state ) {
+  List<Widget> _buildMenuOptions(BuildContext context, SettingState state) {
     final List<MenuOption> menuOptions = [
       MenuOption(
         title: AppConstants.aboutAccount,
         icon: const Icon(Icons.person, color: Colors.white, size: 24),
-        onTap: () {},
+        onTap: () async {
+          final result = await Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const UserProfilePage()),
+          );
+
+          if (result == true) {
+            context.read<SettingBloc>().add(SettingGetUserProfileEvent());
+          }
+        },
       ),
       MenuOption(
         title: AppConstants.search,
         icon: SvgPicture.asset(AppIcons.search.svgAssetPath),
-        onTap: () {},
+        onTap: () {
+          Navigator.of(context).pushNamed(AppRoutes.search);
+        },
       ),
       MenuOption(
         title: AppConstants.myReviews,
