@@ -48,4 +48,12 @@ class SharedPrefer {
   String getUsername() {
     return _prefsInstance.getString(SharedPreferencesKey.username) ?? "";
   }
+
+  Future<void> setEmailUser(String value) async {
+    await _prefsInstance.setString(SharedPreferencesKey.email, value);
+  }
+
+  String getEmailUser() {
+    return _prefsInstance.getString(SharedPreferencesKey.email) ?? "";
+  }
 }

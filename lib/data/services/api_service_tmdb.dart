@@ -15,7 +15,6 @@ class ApiServiceTMDB {
       queryParameters['api_key'] = AppSecretKey.apiKey;
 
       final response = await _dio.get(path, queryParameters: queryParameters);
-      print("Response url : $path");
       return response;
     } on DioException catch (e) {
       throw Exception('Dio error: ${e.message}');

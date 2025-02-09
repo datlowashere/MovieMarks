@@ -91,6 +91,14 @@ class UserModel {
     };
   }
 
+  Map<String, dynamic> editToJson() {
+    return {
+      'avatar': avatar,
+      'fullName': fullName,
+      'username': username,
+    };
+  }
+
   Map<String, dynamic> registerToJson() {
     return {'email': email, 'password': password, 'code': code};
   }

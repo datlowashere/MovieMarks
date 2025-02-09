@@ -9,11 +9,17 @@ class SettingBloc extends Bloc<SettingEvent, SettingState> {
 
   SettingBloc() : super(SettingState.initial()) {
     on<SettingInitialEvent>(_onSettingInitialEvent);
+    on<SettingGetUserProfileEvent>(_onSettingGetUserProfileEvent);
     on<SettingLogoutEvent>(_onSettingLogoutEvent);
   }
 
   void _onSettingInitialEvent(
       SettingInitialEvent event, Emitter<SettingState> emit) async {
+    add(SettingGetUserProfileEvent());
+  }
+
+  void _onSettingGetUserProfileEvent(
+      SettingGetUserProfileEvent event, Emitter<SettingState> emit) async {
     final result = await userRepository.getUserInfo();
     result.fold((error) {}, (response) {
       emit(state.copyWith(user: response));

@@ -1,5 +1,7 @@
+import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:movie_marks/constants/api_urls.dart';
 import 'package:movie_marks/data/data_sources/local/shared_preferences.dart';
 import 'package:movie_marks/data/models/user_model.dart';
@@ -36,6 +38,7 @@ class UserRepository {
       await SharedPrefer.sharedPrefer.setUserId("");
       await SharedPrefer.sharedPrefer.setAvatar("");
       await SharedPrefer.sharedPrefer.setUsername("");
+      await SharedPrefer.sharedPrefer.setEmailUser("");
 
       return Right(response.data['message']);
     } catch (e) {
@@ -80,6 +83,7 @@ class UserRepository {
       final avatarUrl = response.data['user']['avatar'] as String?;
       final id = response.data['user']['_id'] as String?;
       final username = response.data['user']['username'] as String?;
+      final email = response.data['user']['email'] as String?;
 
       if (avatarUrl != null && avatarUrl.isNotEmpty) {
         await SharedPrefer.sharedPrefer.setAvatar(avatarUrl);
@@ -90,9 +94,47 @@ class UserRepository {
       if (username != null && username.isNotEmpty) {
         await SharedPrefer.sharedPrefer.setUsername(username);
       }
+      if (email != null && email.isNotEmpty) {
+        await SharedPrefer.sharedPrefer.setEmailUser(email);
+      }
       final user = UserModel.fromJson(response.data['user']);
 
       return Right(user);
+    } catch (e) {
+      return Left(e.toString());
+    }
+  }
+
+  Future<Either<String, UserModel>> editUserProfile(
+      UserModel? user, File? avatarFile) async {
+    try {
+      FormData formData = FormData.fromMap(user?.editToJson() ?? {});
+
+      if (avatarFile != null) {
+        formData.files.add(
+          MapEntry(
+            'avatar',
+            await MultipartFile.fromFile(
+              avatarFile.path,
+              filename: avatarFile.path.split('/').last,
+              contentType: MediaType('image', 'png'),
+            ),
+          ),
+        );
+      }
+
+      final response = await _apiService.request(
+        ApiUrls.updateUser,
+        method: Method.put,
+        data: formData,
+      );
+
+      if (response.statusCode == 200 && response.data != null) {
+        UserModel updatedUser = UserModel.fromJson(response.data);
+        return Right(updatedUser);
+      } else {
+        return Left(" ${response.statusMessage}");
+      }
     } catch (e) {
       return Left(e.toString());
     }

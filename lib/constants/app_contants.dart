@@ -76,5 +76,13 @@ class AppConstants {
   static const writeAReview = "Write a review";
   static const submit = "Submit";
   static const clear = "Clear";
+  static const profile = "User Profile";
+  static const option = "Option";
+  static const fromGallery = "Choose from gallery";
+  static const fromCamera = "Take a photo";
+  static const username = "Username";
+  static const fullName = "Full Name";
+  static const save = "Save";
+  static const updateUserSuccess = "Update User Successful!";
 
 }
