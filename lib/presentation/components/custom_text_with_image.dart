@@ -43,7 +43,7 @@ class _CustomTextWithImageState extends State<CustomTextWithImage> {
         Text(
           widget.title,
           style: widget.titleStyle ??
-              AppTextStyles.beVietNamProStyles.medium12White,
+              AppTextStyles.beVietNamProStyles.medium14White,
           softWrap: true,
           textAlign: widget.titleAlign ?? TextAlign.center,
         ),
@@ -51,7 +51,7 @@ class _CustomTextWithImageState extends State<CustomTextWithImage> {
           Text(
             widget.content ?? "",
             style: widget.contentStyle ??
-                AppTextStyles.beVietNamProStyles.medium12White,
+                AppTextStyles.beVietNamProStyles.medium14White,
             softWrap: true,
             textAlign: widget.contentAlign ?? TextAlign.center,
           ),

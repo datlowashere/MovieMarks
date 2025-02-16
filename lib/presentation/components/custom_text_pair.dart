@@ -31,14 +31,14 @@ class CustomTextPair extends StatelessWidget {
         Text(
           title,
           style: titleStyle ??
-              AppTextStyles.beVietNamProStyles.medium12White
+              AppTextStyles.beVietNamProStyles.medium14White
                   .copyWith(color: titleColor),
         ),
         SizedBox(height: betweenSpacing),
         Text(
           content,
           style: contentStyle ??
-              AppTextStyles.beVietNamProStyles.regular12White
+              AppTextStyles.beVietNamProStyles.regular14White
                   .copyWith(color: contentColor),
         ),
         SizedBox(height: marginBottom),

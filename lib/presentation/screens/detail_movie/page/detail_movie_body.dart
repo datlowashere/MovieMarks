@@ -86,43 +86,56 @@ class _DetailMovieBodyState extends State<DetailMovieBody> {
                                     const SizedBox(
                                       height: 18,
                                     ),
-                                    Container(
-                                        margin: const EdgeInsets.only(left: 29),
-                                        child: Text(
-                                          "`${state.movieModel?.tagline}`",
-                                          style: AppTextStyles
-                                              .beVietNamProStyles.medium12White
-                                              .copyWith(
-                                                  fontStyle: FontStyle.italic),
-                                        )),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          top: 18, bottom: 8),
-                                      height: 32,
-                                      child: ListView.separated(
-                                        scrollDirection: Axis.horizontal,
-                                        itemCount: genres.length,
-                                        itemBuilder: (context, index) {
-                                          final item = genres[index];
-                                          return Container(
-                                            margin: EdgeInsets.only(
-                                                left: index == 0 ? 29 : 0),
-                                            child: CustomButton(
-                                              onTap: () {},
-                                              title: item.title ?? "",
-                                              padding:
-                                                  const EdgeInsets.symmetric(
-                                                      vertical: 7,
-                                                      horizontal: 22),
-                                              backgroundColor:
-                                                  AppColors.arsenic,
+                                    state.movieModel?.tagline?.isNotEmpty ??
+                                            true
+                                        ? Container(
+                                            margin:
+                                                const EdgeInsets.only(left: 29),
+                                            child: Text(
+                                              "`${state.movieModel?.tagline}`",
+                                              style: AppTextStyles
+                                                  .beVietNamProStyles
+                                                  .medium12White
+                                                  .copyWith(
+                                                      fontStyle:
+                                                          FontStyle.italic),
+                                            ))
+                                        : const SizedBox.shrink(),
+                                    genres.isNotEmpty
+                                        ? Container(
+                                            margin: const EdgeInsets.only(
+                                                top: 18, bottom: 8),
+                                            height: 32,
+                                            child: ListView.separated(
+                                              scrollDirection: Axis.horizontal,
+                                              itemCount: genres.length,
+                                              itemBuilder: (context, index) {
+                                                final item = genres[index];
+                                                return Container(
+                                                  margin: EdgeInsets.only(
+                                                      left:
+                                                          index == 0 ? 29 : 0),
+                                                  child: CustomButton(
+                                                    onTap: () {},
+                                                    title: item.title ?? "",
+                                                    titleStyle: AppTextStyles
+                                                        .beVietNamProStyles
+                                                        .regular14White,
+                                                    padding: const EdgeInsets
+                                                        .symmetric(
+                                                        vertical: 7,
+                                                        horizontal: 22),
+                                                    backgroundColor:
+                                                        AppColors.arsenic,
+                                                  ),
+                                                );
+                                              },
+                                              separatorBuilder:
+                                                  (context, index) =>
+                                                      const SizedBox(width: 12),
                                             ),
-                                          );
-                                        },
-                                        separatorBuilder: (context, index) =>
-                                            const SizedBox(width: 12),
-                                      ),
-                                    ),
+                                          )
+                                        : const SizedBox.shrink(),
                                   ],
                                 );
                               },

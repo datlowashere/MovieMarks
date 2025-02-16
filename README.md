@@ -109,7 +109,10 @@ Key dependencies used in this project:
 - **flutter_otp_text_field**: OTP input fields.
 - **flutter_rating_bar**: Rating bar widget.
 - **intl**: Internationalization and localization.
-
+- **image_picker**: Pick images from the gallery or camera.
+- **permission_handler**: Manage permissions.
+- **camera**: Access and control the device camera.
+- **shimmer**: Add shimmer effects to UI components.
 
 ## Roadmap
 

@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:movie_marks/data/models/movie_model.dart';
+import 'package:movie_marks/data/models/watch_list_model.dart';
 
 enum WatchListStatus {
   initial,
@@ -9,12 +9,12 @@ enum WatchListStatus {
 }
 
 class WatchListState extends Equatable {
-  final WatchListStatus? status;
-  final List<MovieModel>? listMovies;
+  final WatchListStatus status;
+  final WatchListModel? watchListModel;
 
   const WatchListState({
-    this.status,
-    this.listMovies,
+    required this.status,
+    this.watchListModel,
   });
 
   static WatchListState initial() => const WatchListState(
@@ -23,17 +23,14 @@ class WatchListState extends Equatable {
 
   WatchListState copyWith({
     WatchListStatus? status,
-    List<MovieModel>? listMovies,
+    WatchListModel? watchListModel,
   }) {
     return WatchListState(
       status: status ?? this.status,
-      listMovies: listMovies ?? this.listMovies,
+      watchListModel: watchListModel ?? this.watchListModel,
     );
   }
 
   @override
-  List<Object?> get props => [
-        status,
-        listMovies,
-      ];
+  List<Object?> get props => [status, watchListModel];
 }

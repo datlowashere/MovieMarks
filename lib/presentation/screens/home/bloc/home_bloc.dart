@@ -1,7 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:movie_marks/data/models/genre_model.dart';
 import 'package:movie_marks/data/models/movie_model.dart';
-import 'package:movie_marks/data/repository/bookmark_repository.dart';
+import 'package:movie_marks/data/repository/watch_list_repository.dart';
 import 'package:movie_marks/data/repository/genre_repository.dart';
 import 'package:movie_marks/data/repository/movie_repository.dart';
 import 'package:movie_marks/data/repository/user_repository.dart';
@@ -12,7 +12,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GenreRepository genreRepository = GenreRepository();
   final MovieRepository movieRepository = MovieRepository();
   final UserRepository userRepository = UserRepository();
-  final BookmarkRepository bookmarkRepository = BookmarkRepository();
+  final WatchListRepository bookmarkRepository = WatchListRepository();
 
   int currentPage = 1;
   bool isEndOfList = false;
@@ -28,7 +28,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
   void _onHomeInitialEvent(
       HomeInitialEvent event, Emitter<HomeState> emit) async {
     emit(state.copyWith(
-      status: HomeStatus.processing,
+      status: HomeStatus.initial,
       isLoadingPage: event.isLoadingPage,
     ));
 
@@ -90,6 +90,7 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
     if (isEndOfList) return;
 
     emit(state.copyWith(status: HomeStatus.processing));
+    await Future.delayed(const Duration(seconds: 1));
 
     final selectedGenreIds = state.listGenres
         ?.where((genre) => genre.isSelected)

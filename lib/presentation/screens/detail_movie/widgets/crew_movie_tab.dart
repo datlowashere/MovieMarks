@@ -42,7 +42,7 @@ class _CrewMovieTabState extends State<CrewMovieTab> {
               children: [
                 Text(
                   jobTitle,
-                  style: AppTextStyles.beVietNamProStyles.medium12White,
+                  style: AppTextStyles.beVietNamProStyles.medium14White,
                 ),
                 const SizedBox(height: 8),
                 GridView.builder(
@@ -50,7 +50,7 @@ class _CrewMovieTabState extends State<CrewMovieTab> {
                   physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
-                    childAspectRatio: 1.5,
+                    childAspectRatio: 1.2,
                   ),
                   itemCount: crewMembers?.length ?? 0,
                   itemBuilder: (context, crewIndex) {
