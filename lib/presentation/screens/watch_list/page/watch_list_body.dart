@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:lazy_load_scrollview/lazy_load_scrollview.dart';
 import 'package:movie_marks/config/theme/app_colors.dart';
 import 'package:movie_marks/config/theme/app_text_styles.dart';
@@ -8,6 +7,7 @@ import 'package:movie_marks/constants/app_contants.dart';
 import 'package:movie_marks/data/models/movie_model.dart';
 import 'package:movie_marks/presentation/components/custom_title.dart';
 import 'package:movie_marks/presentation/components/movie_item.dart';
+import 'package:movie_marks/presentation/components/movie_item_loading.dart';
 import 'package:movie_marks/presentation/screens/detail_movie/page/detail_movie_page.dart';
 import 'package:movie_marks/presentation/screens/watch_list/bloc/watch_list_bloc.dart';
 import 'package:movie_marks/presentation/screens/watch_list/bloc/watch_list_event.dart';
@@ -26,11 +26,7 @@ class _WatchListBody extends State<WatchListBody> {
     return Scaffold(
         backgroundColor: AppColors.charlestonGreen,
         body: BlocListener<WatchListBloc, WatchListState>(
-          listener: (context, state) {
-            state.status == WatchListStatus.processing
-                ? EasyLoading.show()
-                : EasyLoading.dismiss();
-          },
+          listener: (context, state) {},
           child: BlocBuilder<WatchListBloc, WatchListState>(
               builder: (context, state) {
             return SafeArea(
@@ -48,7 +44,8 @@ class _WatchListBody extends State<WatchListBody> {
                   const SizedBox(
                     height: 18,
                   ),
-                  state.listMovies?.isEmpty ?? true
+                  state.watchListModel?.movieModel.isEmpty ??
+                          true && state.status != WatchListStatus.processing
                       ? Expanded(
                           child: Center(
                             child: CustomTitle(
@@ -72,9 +69,20 @@ class _WatchListBody extends State<WatchListBody> {
                               margin: const EdgeInsets.only(left: 29),
                               child: ListView.separated(
                                 addAutomaticKeepAlives: true,
-                                itemCount: state.listMovies?.length ?? 0,
+                                itemCount: state.status ==
+                                        WatchListStatus.processing
+                                    ? 5
+                                    : state.watchListModel?.movieModel.length ??
+                                        0,
                                 itemBuilder: (context, index) {
-                                  final movie = state.listMovies?[index];
+                                  final movie =
+                                      state.watchListModel?.movieModel[index];
+                                  if (state.status ==
+                                      WatchListStatus.processing) {
+                                    return const MovieItemLoading(
+                                      isShowReadMore: true,
+                                    );
+                                  }
                                   return MovieItem(
                                     index: index,
                                     movieModel: movie,

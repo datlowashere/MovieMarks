@@ -37,7 +37,7 @@ class CastMovieTab extends StatelessWidget {
       padding: const EdgeInsets.only(bottom: 10),
       child: Text(
         title,
-        style: AppTextStyles.beVietNamProStyles.medium12White,
+        style: AppTextStyles.beVietNamProStyles.medium14White,
       ),
     );
   }
@@ -48,7 +48,7 @@ class CastMovieTab extends StatelessWidget {
       physics: const NeverScrollableScrollPhysics(),
       gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
         crossAxisCount: 2,
-        childAspectRatio: 1.5,
+        childAspectRatio: 1.2,
         crossAxisSpacing: 10,
         mainAxisSpacing: 10,
       ),

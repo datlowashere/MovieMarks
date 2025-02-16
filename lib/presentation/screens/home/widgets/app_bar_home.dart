@@ -50,7 +50,7 @@ class _AppBarHomeState extends State<AppBarHome> {
               CustomTextPair(
                 title: AppConstants.welcomeBack,
                 content: widget.userModel?.username ?? "",
-                titleStyle: AppTextStyles.beVietNamProStyles.semiBold14BrightGray,
+                titleStyle: AppTextStyles.beVietNamProStyles.semiBold16White,
                 contentStyle:
                     AppTextStyles.beVietNamProStyles.semiBold14BrightGray,
                 mainAxisAlignment: MainAxisAlignment.center,

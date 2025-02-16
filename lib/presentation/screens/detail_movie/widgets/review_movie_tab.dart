@@ -77,7 +77,7 @@ class _ReviewMovieTabState extends State<ReviewMovieTab> {
         ),
         CustomTitle(
           title: AppConstants.reviews,
-          style: AppTextStyles.beVietNamProStyles.medium12White,
+          style: AppTextStyles.beVietNamProStyles.semiBold14White,
           isFullWidth: true,
         ),
         const SizedBox(
@@ -86,7 +86,7 @@ class _ReviewMovieTabState extends State<ReviewMovieTab> {
         widget.reviewData.reviews.isEmpty ?
         CustomTitle(
           title: AppConstants.noReviews,
-          style: AppTextStyles.beVietNamProStyles.medium12White,
+          style: AppTextStyles.beVietNamProStyles.regular14White,
         ):
         ListView.separated(
             shrinkWrap: true,

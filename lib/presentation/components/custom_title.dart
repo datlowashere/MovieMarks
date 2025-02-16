@@ -36,7 +36,7 @@ class CustomTitle extends StatelessWidget {
       child: Text(
         title ?? AppConstants.title,
         textAlign: textAlign ?? TextAlign.left,
-        style: style ?? AppTextStyles.beVietNamProStyles.semiBold14Black,
+        style: style ?? AppTextStyles.beVietNamProStyles.semiBold16White,
       ),
     );
   }

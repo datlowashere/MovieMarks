@@ -11,6 +11,7 @@ import 'package:movie_marks/data/data_sources/local/shared_preferences.dart';
 import 'package:movie_marks/presentation/components/custom_avatar.dart';
 import 'package:movie_marks/presentation/components/custom_button.dart';
 import 'package:movie_marks/presentation/components/custom_title.dart';
+import 'package:movie_marks/presentation/components/dialog_login_request.dart';
 import 'package:movie_marks/presentation/routes/app_route.dart';
 import 'package:movie_marks/presentation/screens/settings/bloc/setting_bloc.dart';
 import 'package:movie_marks/presentation/screens/settings/bloc/setting_event.dart';
@@ -84,7 +85,7 @@ class _SettingBodyState extends State<SettingBody> {
           ? state.user?.username ?? ""
           : state.user?.fullName ?? "",
       subTitle: state.user?.email ?? "",
-      subTitleStyle: AppTextStyles.beVietNamProStyles.regular12White,
+      subTitleStyle: AppTextStyles.beVietNamProStyles.regular14White,
       titleAlign: TextAlign.start,
       titleStyle: AppTextStyles.beVietNamProStyles.semiBold14White,
       subAlign: TextAlign.start,
@@ -93,24 +94,9 @@ class _SettingBodyState extends State<SettingBody> {
       borderRadius: 0,
       isFullWidth: true,
       onTap: () async {
-        final result = await Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => const UserProfilePage()),
-        );
+        final userToken = SharedPrefer.sharedPrefer.getUserToken();
 
-        if (result == true) {
-          context.read<SettingBloc>().add(SettingGetUserProfileEvent());
-        }
-      },
-    );
-  }
-
-  List<Widget> _buildMenuOptions(BuildContext context, SettingState state) {
-    final List<MenuOption> menuOptions = [
-      MenuOption(
-        title: AppConstants.aboutAccount,
-        icon: const Icon(Icons.person, color: Colors.white, size: 24),
-        onTap: () async {
+        if (userToken.isNotEmpty) {
           final result = await Navigator.push(
             context,
             MaterialPageRoute(builder: (context) => const UserProfilePage()),
@@ -119,9 +105,45 @@ class _SettingBodyState extends State<SettingBody> {
           if (result == true) {
             context.read<SettingBloc>().add(SettingGetUserProfileEvent());
           }
+        } else {
+          _showAuthDialog(context);
+        }
+      },
+    );
+  }
+
+  void _showAuthDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (context) => const DialogLoginRequest(),
+    );
+  }
+
+  List<Widget> _buildMenuOptions(BuildContext context, SettingState state) {
+    final List<MenuOption> menuOptions = [
+      MenuOption(
+        textStyle: AppTextStyles.beVietNamProStyles.regular14White,
+        title: AppConstants.aboutAccount,
+        icon: const Icon(Icons.person, color: Colors.white, size: 24),
+        onTap: () async {
+          final userToken = SharedPrefer.sharedPrefer.getUserToken();
+
+          if (userToken.isNotEmpty) {
+            final result = await Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const UserProfilePage()),
+            );
+
+            if (result == true) {
+              context.read<SettingBloc>().add(SettingGetUserProfileEvent());
+            }
+          } else {
+            _showAuthDialog(context);
+          }
         },
       ),
       MenuOption(
+        textStyle: AppTextStyles.beVietNamProStyles.regular14White,
         title: AppConstants.search,
         icon: SvgPicture.asset(AppIcons.search.svgAssetPath),
         onTap: () {
@@ -129,21 +151,25 @@ class _SettingBodyState extends State<SettingBody> {
         },
       ),
       MenuOption(
+        textStyle: AppTextStyles.beVietNamProStyles.regular14White,
         title: AppConstants.myReviews,
         icon: SvgPicture.asset(AppIcons.review.svgAssetPath, width: 24),
         onTap: () {},
       ),
       MenuOption(
+        textStyle: AppTextStyles.beVietNamProStyles.regular14White,
         title: AppConstants.privacy,
         icon: SvgPicture.asset(AppIcons.privacy.svgAssetPath, width: 24),
         onTap: () {},
       ),
       MenuOption(
+        textStyle: AppTextStyles.beVietNamProStyles.regular14White,
         title: AppConstants.helpCentre,
         icon: SvgPicture.asset(AppIcons.help.svgAssetPath, width: 24),
         onTap: () {},
       ),
       MenuOption(
+        textStyle: AppTextStyles.beVietNamProStyles.regular14White,
         title: AppConstants.aboutThisApp,
         icon: const Icon(Icons.info, color: Colors.white),
         onTap: () {},
@@ -153,6 +179,7 @@ class _SettingBodyState extends State<SettingBody> {
     if (SharedPrefer.sharedPrefer.getUserToken().isNotEmpty) {
       menuOptions.add(
         MenuOption(
+          textStyle: AppTextStyles.beVietNamProStyles.regular14White,
           title: AppConstants.logout,
           icon: SvgPicture.asset(AppIcons.logout.svgAssetPath, width: 24),
           onTap: () {
@@ -173,6 +200,7 @@ class _SettingBodyState extends State<SettingBody> {
     } else {
       menuOptions.add(
         MenuOption(
+          textStyle: AppTextStyles.beVietNamProStyles.regular14White,
           title: AppConstants.login,
           icon: SvgPicture.asset(AppIcons.login.svgAssetPath, width: 24),
           onTap: () => Navigator.pushNamed(context, AppRoutes.login),

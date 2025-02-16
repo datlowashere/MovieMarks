@@ -3,7 +3,7 @@ import 'package:movie_marks/data/data_sources/local/shared_preferences.dart';
 import 'package:movie_marks/data/models/review_data_model.dart';
 import 'package:movie_marks/data/models/review_model.dart';
 import 'package:movie_marks/data/models/user_model.dart';
-import 'package:movie_marks/data/repository/bookmark_repository.dart';
+import 'package:movie_marks/data/repository/watch_list_repository.dart';
 import 'package:movie_marks/data/repository/cast_crew_repository.dart';
 import 'package:movie_marks/data/repository/movie_repository.dart';
 import 'package:movie_marks/data/repository/review_repository.dart';
@@ -16,7 +16,7 @@ class DetailMovieBloc extends Bloc<DetailMovieEvent, DetailMovieState> {
   final SearchRepository searchRepository = SearchRepository();
   final CastCrewRepository castCrewRepository = CastCrewRepository();
   final ReviewRepository reviewRepository = ReviewRepository();
-  final BookmarkRepository bookmarkRepository = BookmarkRepository();
+  final WatchListRepository bookmarkRepository = WatchListRepository();
   final userId = SharedPrefer.sharedPrefer.getUserId();
 
   DetailMovieBloc() : super(DetailMovieState.initial()) {

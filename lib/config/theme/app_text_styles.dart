@@ -63,16 +63,22 @@ class BeVietNamProStyles {
       customBeVietNamProStyle(12, Colors.white, AppFontWeight.semiBold.weight);
   final semiBold12CharlestonGreen = customBeVietNamProStyle(
       12, AppColors.charlestonGreen, AppFontWeight.semiBold.weight);
+  final medium14White =
+      customBeVietNamProStyle(14, Colors.white, AppFontWeight.medium.weight);
   final regular14White =
       customBeVietNamProStyle(14, Colors.white, AppFontWeight.regular.weight);
-  final regular14BrinkPink =
-  customBeVietNamProStyle(14, AppColors.brinkPink, AppFontWeight.regular.weight);
+  final regular14BrinkPink = customBeVietNamProStyle(
+      14, AppColors.brinkPink, AppFontWeight.regular.weight);
+  final regular14Eucalyptus = customBeVietNamProStyle(
+      14, AppColors.eucalyptus, AppFontWeight.regular.weight);
   final semiBold14CharlestonGreen = customBeVietNamProStyle(
       14, AppColors.charlestonGreen, AppFontWeight.semiBold.weight);
   final semiBold14BrightGray = customBeVietNamProStyle(
       14, AppColors.brightGray, AppFontWeight.semiBold.weight);
   final semiBold14White =
       customBeVietNamProStyle(14, Colors.white, AppFontWeight.semiBold.weight);
+  final bold14White =
+      customBeVietNamProStyle(14, Colors.white, AppFontWeight.bold.weight);
   final bold16White =
       customBeVietNamProStyle(16, Colors.white, AppFontWeight.bold.weight);
   final semiBold16White =
@@ -88,7 +94,7 @@ class BeVietNamProStyles {
   final semiBold18Black =
       customBeVietNamProStyle(18, Colors.black, AppFontWeight.semiBold.weight);
   final bold24White =
-  customBeVietNamProStyle(24, Colors.white, AppFontWeight.bold.weight);
+      customBeVietNamProStyle(24, Colors.white, AppFontWeight.bold.weight);
   final bold36White =
       customBeVietNamProStyle(36, Colors.white, AppFontWeight.bold.weight);
   final bold36Black =

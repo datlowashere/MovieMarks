@@ -2,12 +2,13 @@ import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:movie_marks/constants/api_urls.dart';
 import 'package:movie_marks/data/models/movie_model.dart';
+import 'package:movie_marks/data/models/watch_list_model.dart';
 import 'package:movie_marks/data/services/api_service.dart';
 
-class BookmarkRepository {
+class WatchListRepository {
   final ApiService _apiService = ApiService();
 
-  Future<Either<String, List<MovieModel>>> getBookmarksByUser(
+  Future<Either<String,WatchListModel>> getWatchListByUser(
       {int page = 1, int limit = 10}) async {
     try {
       final response = await _apiService.request(
@@ -16,11 +17,9 @@ class BookmarkRepository {
       );
 
       if (response.statusCode == 200) {
-        List<MovieModel> bookmarks = (response.data['bookmarks'] as List)
-            .map((bookmarkData) => MovieModel.fromJson(bookmarkData))
-            .toList();
+        final watchListModel = WatchListModel.fromJson(response.data);
 
-        return Right(bookmarks);
+        return Right(watchListModel);
       } else {
         return Left('Error: ${response.statusCode}');
       }

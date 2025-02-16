@@ -129,7 +129,7 @@ class MovieItemState extends State<MovieItem>
             Text(
               AppConstants.readMore,
               textAlign: TextAlign.left,
-              style: AppTextStyles.beVietNamProStyles.regular12Eucalyptus,
+              style: AppTextStyles.beVietNamProStyles.regular14Eucalyptus,
             ),
         ],
       ),
@@ -176,7 +176,7 @@ class MovieItemState extends State<MovieItem>
                 ? "n/a"
                 : (widget.movieModel?.userAverageRating ?? "n/a"),
             textAlign: TextAlign.center,
-            style: AppTextStyles.beVietNamProStyles.regular12White.copyWith(
+            style: AppTextStyles.beVietNamProStyles.regular14White.copyWith(
               color: widget.movieModel?.isRating == true
                   ? AppColors.eucalyptus
                   : Colors.white,

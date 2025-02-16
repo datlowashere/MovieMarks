@@ -104,7 +104,7 @@ class _OverviewMovieTabState extends State<OverviewMovieTab> {
       children: [
         Text(
           title,
-          style: AppTextStyles.beVietNamProStyles.medium12White,
+          style: AppTextStyles.beVietNamProStyles.medium14White,
         ),
         const SizedBox(height: 10),
         GridView.count(
@@ -131,7 +131,7 @@ class _OverviewMovieTabState extends State<OverviewMovieTab> {
       children: [
         Text(
           AppConstants.socialNetwork,
-          style: AppTextStyles.beVietNamProStyles.medium12White,
+          style: AppTextStyles.beVietNamProStyles.medium14White,
         ),
         const SizedBox(height: 10),
         Wrap(
@@ -186,7 +186,7 @@ class _OverviewMovieTabState extends State<OverviewMovieTab> {
       children: [
         Text(
           AppConstants.keywords,
-          style: AppTextStyles.beVietNamProStyles.medium12White,
+          style: AppTextStyles.beVietNamProStyles.medium14White,
         ),
         const SizedBox(height: 10),
         Wrap(
@@ -196,6 +196,7 @@ class _OverviewMovieTabState extends State<OverviewMovieTab> {
             return CustomButton(
               onTap: () {},
               title: item.name ?? AppConstants.unKnow,
+              titleStyle: AppTextStyles.beVietNamProStyles.regular14White,
               backgroundColor: AppColors.arsenic,
             );
           }).toList(),
